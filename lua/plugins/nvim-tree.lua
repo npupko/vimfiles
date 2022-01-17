@@ -1,5 +1,6 @@
 vim.api.nvim_set_keymap('n', '<leader><leader>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>m', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
+vim.g.nvim_tree_indent_markers = 1
 
 vim.g.nvim_tree_show_icons = {
   folders = 1,

@@ -27,6 +27,8 @@ return require('packer').startup(function(use)
     config = function() require('plugins.vim-svelte-plugin') end
   }
 
+  use { 'dstein64/vim-startuptime' }
+
   use { 'vim-crystal/vim-crystal', ft = { 'cr' } }
   use { 'ianks/vim-tsx', ft = { 'tsx' } }
 
@@ -43,7 +45,7 @@ return require('packer').startup(function(use)
 
   -- Colorschemes
   use 'jacoborus/tender.vim'
-  use 'morhetz/gruvbox'
+  use { "ellisonleao/gruvbox.nvim" }
 
   -- Plugins
   use {
@@ -71,8 +73,8 @@ return require('packer').startup(function(use)
   }
 
   use {
-    'nathanaelkane/vim-indent-guides',
-    config = function() require('plugins.vim-indent-guides') end
+    'lukas-reineke/indent-blankline.nvim',
+    config = function() require('plugins.indent-blankline') end
   }
 
   use '/usr/local/opt/fzf'
@@ -85,7 +87,12 @@ return require('packer').startup(function(use)
 
   use 'tpope/vim-rails'
   use 'tpope/vim-surround'
-  use 'tpope/vim-commentary'
+
+  use {
+    'numToStr/Comment.nvim',
+    config = function() require('Comment').setup() end
+  }
+
   use 'tpope/vim-repeat'
   use 'tpope/vim-fugitive'
   use 'tpope/vim-endwise'
@@ -94,9 +101,9 @@ return require('packer').startup(function(use)
   use 'jparise/vim-graphql'
 
   use {
-    'vim-airline/vim-airline',
-    requires = 'vim-airline/vim-airline-themes',
-    config = function() require('plugins.vim-airline') end
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    config = function() require('plugins.lualine') end
   }
 
   use 'mattn/emmet-vim'
