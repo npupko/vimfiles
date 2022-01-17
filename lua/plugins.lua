@@ -23,6 +23,7 @@ return require('packer').startup(function(use)
 
   use {
     'leafoftree/vim-svelte-plugin',
+    ft = { 'svelte' },
     config = function() require('plugins.vim-svelte-plugin') end
   }
 
