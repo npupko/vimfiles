@@ -4,7 +4,7 @@
 " General Config {{{
 
 syntax on
-syntax sync fromstart
+" syntax sync fromstart
 set nofoldenable
 set visualbell
 set relativenumber
@@ -44,9 +44,9 @@ let g:ruby_host_prog = 'rvm 2.7.2@global do neovim-ruby-host'
 let g:node_host_prog = system('volta which neovim-node-host | tr -d "\n"')
 
 let mapleader = ","
-lang en_US.UTF-8
+" lang en_US.UTF-8
 
-:command! Frt :normal gg O# frozen_string_literal: true<CR><ESC>x
+lua vim.api.nvim_command([[command! Frt :normal gg O# frozen_string_literal: true<CR><ESC>x ]])
 
 map <leader>cle :call CopyLinterError()<CR>
 
