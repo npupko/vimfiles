@@ -13,6 +13,7 @@ vim.cmd([[
 
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
+
   -- Languages
   use {
     'evanleck/vim-svelte',
@@ -75,10 +76,12 @@ return require('packer').startup(function(use)
 
   use '/usr/local/opt/fzf'
   use 'junegunn/fzf.vim'
+
   use {
     'vim-ruby/vim-ruby',
     config = function() require('plugins.vim-ruby') end
   }
+
   use 'tpope/vim-rails'
   use 'tpope/vim-surround'
   use 'tpope/vim-commentary'
@@ -103,7 +106,6 @@ return require('packer').startup(function(use)
   }
 
   use 'AndrewRadev/splitjoin.vim'
-  -- use 'preservim/nerdtree'
 
   use {
     'ms-jpq/coq_nvim',
