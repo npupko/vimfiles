@@ -48,12 +48,19 @@ return require('packer').startup(function(use)
   use { "ellisonleao/gruvbox.nvim" }
 
   -- Plugins
+  -- use {
+  --   'kyazdani42/nvim-tree.lua',
+  --   requires = {
+  --     'kyazdani42/nvim-web-devicons', -- optional, for file icon
+  --   },
+  --   config = function() require('plugins.nvim-tree') end
+  -- }
+
   use {
-    'kyazdani42/nvim-tree.lua',
-    requires = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icon
-    },
-    config = function() require('plugins.nvim-tree') end
+    'ms-jpq/chadtree',
+    branch = 'chad',
+    run = ':CHADdeps',
+    config = function() require('plugins.chadtree') end
   }
 
   use {

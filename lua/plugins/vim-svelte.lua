@@ -1,2 +1,2 @@
-vim.g.svelte_preprocessors = ['typescript']
+vim.g.svelte_preprocessors = { 'typescript' }
 
