@@ -20,11 +20,13 @@ cmp.setup({
   },
   preselect = cmp.PreselectMode.None,
   mapping = {
+    -- ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+		-- ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
     ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_next_item()
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
       elseif vim.fn["vsnip#available"](1) == 1 then
         feedkey("<Plug>(vsnip-expand-or-jump)", "")
       elseif has_words_before() then
@@ -35,7 +37,7 @@ cmp.setup({
     end, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(function()
       if cmp.visible() then
-        cmp.select_prev_item()
+        cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
       elseif vim.fn["vsnip#jumpable"](-1) == 1 then
         feedkey("<Plug>(vsnip-jump-prev)", "")
       end
@@ -47,7 +49,6 @@ cmp.setup({
     }),
     ['<CR>'] = function(fallback)
       if cmp.visible() then
-        cmp.confirm()
         cmp.mapping.confirm({ select = true })
       else
         fallback() -- If you are using vim-endwise, this fallback function will be behaive as the vim-endwise.
