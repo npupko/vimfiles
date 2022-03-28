@@ -48,24 +48,30 @@ return require('packer').startup(function(use)
   use { "ellisonleao/gruvbox.nvim" }
 
   -- Plugins
+  use {
+    'kyazdani42/nvim-tree.lua',
+    requires = {
+      'kyazdani42/nvim-web-devicons', -- optional, for file icon
+    },
+    config = function() require('plugins.nvim-tree') end
+  }
+
   -- use {
-  --   'kyazdani42/nvim-tree.lua',
-  --   requires = {
-  --     'kyazdani42/nvim-web-devicons', -- optional, for file icon
-  --   },
-  --   config = function() require('plugins.nvim-tree') end
+  --   'ms-jpq/chadtree',
+  --   branch = 'chad',
+  --   run = ':CHADdeps',
+  --   config = function() require('plugins.chadtree') end
   -- }
 
   use {
-    'ms-jpq/chadtree',
-    branch = 'chad',
-    run = ':CHADdeps',
-    config = function() require('plugins.chadtree') end
+    'neovim/nvim-lspconfig'
+    -- config = function() require('plugins.lspconfig') end
+    -- config = function() require('plugins.lsp_installer') end
   }
 
   use {
-    'neovim/nvim-lspconfig',
-    config = function() require('plugins.lspconfig') end
+    'williamboman/nvim-lsp-installer',
+    config = function() require('plugins.lsp_installer') end
   }
 
   use {
@@ -122,11 +128,25 @@ return require('packer').startup(function(use)
 
   use 'AndrewRadev/splitjoin.vim'
 
+  -- use {
+  --   'ms-jpq/coq_nvim',
+  --   config = function() require('plugins.coq_nvim') end
+  -- }
+  -- use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
+  --
+  -- Icons for the autocompletion
+  use { 'onsails/lspkind-nvim' }
   use {
-    'ms-jpq/coq_nvim',
-    config = function() require('plugins.coq_nvim') end
+    'hrsh7th/cmp-nvim-lsp',
+    config = function() require('plugins.cmp_lsp') end
   }
-  use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
+  use { 'hrsh7th/cmp-buffer' }
+  use { 'hrsh7th/cmp-path' }
+  -- use { 'hrsh7th/cmp-cmdline' }
+  use { 'hrsh7th/nvim-cmp' }
+  use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
+  use { 'hrsh7th/cmp-vsnip' }
+  use { 'hrsh7th/vim-vsnip' }
 
   if packer_bootstrap then
     require('packer').sync()

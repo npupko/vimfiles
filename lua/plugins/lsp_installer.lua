@@ -1,11 +1,5 @@
--- require'lspconfig'.solargraph.setup{}
--- require'lspconfig'.svelte.setup{}
---
--- local coq = require "coq"
-local nvim_lsp = require('lspconfig')
+-- sadlaskdjla
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -36,56 +30,41 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
--- local servers = { "solargraph", "svelte", "tsserver", "tailwindcss" }
--- for _, lsp in ipairs(servers) do
---   nvim_lsp[lsp].setup {
---     on_attach = on_attach,
---     flags = {
---       debounce_text_changes = 150,
---     }
---   }
--- end
-
 local lsp_installer = require("nvim-lsp-installer")
 
-lsp_installer.settings({
-    ui = {
-        icons = {
-            server_installed = "✓",
-            server_pending = "➜",
-            server_uninstalled = "✗"
-        }
-    }
-})
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+-- Register a handler that will be called for each installed server when it's ready (i.e. when installation is finished
+-- or if the server is already installed).
 lsp_installer.on_server_ready(function(server)
   local opts = {
+    capabilities = capabilities,
     on_attach = on_attach,
     flags = {
       debounce_text_changes = 150,
     }
   }
 
+
+  -- (optional) Customize the options passed to the server
+  -- if server.name == "tsserver" then
+  --     opts.root_dir = function() ... end
+  -- end
+
+  if server.name == "cssls" then
+      opts.filetypes = { "css", "scss", "less", "svelte" }
+  end
+
+  if server.name == "cssmodules_ls" then
+      opts.filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "svelte" }
+  end
+
+  if server.name == "emmet_ls" then
+      opts.filetypes = { "html", "css", "svelte" }
+  end
+
   server:setup(opts)
 end)
-
--- local lsp_installer = require("nvim-lsp-installer")
--- require("nvim-lsp-installer").setup()
-
--- local servers = lsp_installer.installed_servers()
--- for _, server in pairs(servers) do
---   require'lspconfig'[server].setup{}
--- end
-
--- local servers = { "solargraph", "svelte", "tsserver" }
--- for _, lsp in ipairs(servers) do
---   nvim_lsp[lsp].setup(coq.lsp_ensure_capabilities({ on_attach = on_attach, flags = { debounce_text_changes = 150, } }))
--- end
-
-
--- https://github.com/neovim/nvim-lspconfig/wiki/UI-customization
 
 vim.diagnostic.config({
   virtual_text = false,
@@ -95,5 +74,5 @@ vim.diagnostic.config({
   severity_sort = false,
 })
 
-vim.o.updatetime = 250
-vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+-- vim.o.updatetime = 250
+-- vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
