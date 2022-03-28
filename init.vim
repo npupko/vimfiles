@@ -48,6 +48,16 @@ lang en_US.UTF-8
 
 lua vim.api.nvim_command([[command! Frt :normal gg O# frozen_string_literal: true<CR><ESC>x ]])
 
+lua << EOF
+  vim.diagnostic.config({
+    virtual_text = true,
+    signs = true,
+    underline = true,
+    update_in_insert = true,
+    severity_sort = true,
+  })
+EOF
+
 map <leader>cle :call CopyLinterError()<CR>
 
 map <leader>cfp :let @+ = expand("%")<CR>
@@ -161,5 +171,8 @@ function! AddPry()
 endfunction
 
 lua require('plugins')
+
+let g:loaded_sql_completion = 0
+let g:omni_sql_no_default_maps = 1
 
 " vim:foldmethod=marker:
