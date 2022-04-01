@@ -4,7 +4,6 @@
 " General Config {{{
 
 syntax on
-" syntax sync fromstart
 set nofoldenable
 set visualbell
 set relativenumber
@@ -44,19 +43,10 @@ let g:ruby_host_prog = 'rvm 2.7.2@global do neovim-ruby-host'
 let g:node_host_prog = system('volta which neovim-node-host | tr -d "\n"')
 
 let mapleader = ","
+let maplocalleader = " "
 lang en_US.UTF-8
 
 lua vim.api.nvim_command([[command! Frt :normal gg O# frozen_string_literal: true<CR><ESC>x ]])
-
-lua << EOF
-  vim.diagnostic.config({
-    virtual_text = true,
-    signs = true,
-    underline = true,
-    update_in_insert = true,
-    severity_sort = true,
-  })
-EOF
 
 map <leader>cle :call CopyLinterError()<CR>
 
@@ -85,15 +75,6 @@ function! DeleteHiddenBuffers()
     silent execute 'bwipeout' buf
   endfor
 endfunction
-
-let g:fzf_action = {
-      \ 'ctrl-t': 'tab split',
-      \ 'ctrl-s': 'split',
-      \ 'ctrl-v': 'vsplit' }
-nnoremap <c-P> :Files<CR>
-nnoremap <c-\> :Buffers<CR>
-nnoremap <c-M> :History<CR>
-" nunmap <CR>
 
 if has('persistent_undo')
   silent !mkdir ~/.vim/backups > /dev/null 2>&1
@@ -167,6 +148,8 @@ function! AddPry()
     execute "normal obinding.pry\<Esc>"
   elseif &filetype == 'svelte' || &filetype == 'js' || &filetype == 'ts'
     execute "normal odebugger\<Esc>"
+  else
+    execute "normal obinding.pry\<Esc>"
   end
 endfunction
 

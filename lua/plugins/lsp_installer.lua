@@ -70,8 +70,8 @@ vim.diagnostic.config({
   virtual_text = false,
   signs = true,
   underline = true,
-  update_in_insert = false,
-  severity_sort = false,
+  update_in_insert = true,
+  severity_sort = true,
 })
 
 -- vim.o.updatetime = 250

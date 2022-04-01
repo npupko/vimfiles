@@ -65,8 +65,6 @@ return require('packer').startup(function(use)
 
   use {
     'neovim/nvim-lspconfig'
-    -- config = function() require('plugins.lspconfig') end
-    -- config = function() require('plugins.lsp_installer') end
   }
 
   use {
@@ -91,7 +89,19 @@ return require('packer').startup(function(use)
   }
 
   use '/usr/local/opt/fzf'
-  use 'junegunn/fzf.vim'
+  -- use 'junegunn/fzf.vim'
+
+  use {
+    'ibhagwan/fzf-lua',
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    config = function() require('plugins.fzf_lua') end
+  }
+
+  -- use {
+  --   'nvim-telescope/telescope.nvim',
+  --   requires = { 'nvim-lua/plenary.nvim' },
+  --   config = function() require('plugins.telescope') end
+  -- }
 
   use {
     'vim-ruby/vim-ruby',
@@ -145,8 +155,9 @@ return require('packer').startup(function(use)
   -- use { 'hrsh7th/cmp-cmdline' }
   use { 'hrsh7th/nvim-cmp' }
   use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
-  use { 'hrsh7th/cmp-vsnip' }
-  use { 'hrsh7th/vim-vsnip' }
+  use { 'L3MON4D3/LuaSnip' }
+  use { 'saadparwaiz1/cmp_luasnip' }
+  use { 'rafamadriz/friendly-snippets' }
 
   if packer_bootstrap then
     require('packer').sync()
