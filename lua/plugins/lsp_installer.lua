@@ -1,4 +1,4 @@
--- sadlaskdjla
+-- vim.lsp.set_log_level("trace")
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -61,6 +61,16 @@ lsp_installer.on_server_ready(function(server)
 
   if server.name == "emmet_ls" then
       opts.filetypes = { "html", "css", "svelte" }
+  end
+
+  if server.name == "solargraph" then
+    opts.settings = {
+      solargraph = {
+        -- commandPath = '/Users/kassioborges/.asdf/shims/solargraph',
+        diagnostics = true,
+        completion = true,
+      }
+    }
   end
 
   server:setup(opts)
