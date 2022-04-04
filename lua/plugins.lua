@@ -18,13 +18,13 @@ return require('packer').startup(function(use)
   use {
     'evanleck/vim-svelte',
     ft = { 'svelte' },
-    config = function() require('plugins.vim-svelte') end
+    config = function() require('plugins.vim_svelte') end
   }
 
   use {
     'leafoftree/vim-svelte-plugin',
     ft = { 'svelte' },
-    config = function() require('plugins.vim-svelte-plugin') end
+    config = function() require('plugins.vim_svelte_plugin') end
   }
 
   use { 'dstein64/vim-startuptime' }
@@ -35,7 +35,7 @@ return require('packer').startup(function(use)
   use {
     'MaxMEllon/vim-jsx-pretty',
     ft = { 'jsx' },
-    config = function() require('plugins.vim-jsx-pretty') end
+    config = function() require('plugins.vim_jsx_pretty') end
   }
 
   use { 'leafgarland/typescript-vim', ft = { 'ts' } }
@@ -53,7 +53,7 @@ return require('packer').startup(function(use)
     requires = {
       'kyazdani42/nvim-web-devicons', -- optional, for file icon
     },
-    config = function() require('plugins.nvim-tree') end
+    config = function() require('plugins.nvim_tree') end
   }
 
   -- use {
@@ -75,7 +75,7 @@ return require('packer').startup(function(use)
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
-    config = function() require('plugins.nvim-treesitter') end
+    config = function() require('plugins.nvim_treesitter') end
   }
 
   use {
@@ -85,7 +85,7 @@ return require('packer').startup(function(use)
 
   use {
     'lukas-reineke/indent-blankline.nvim',
-    config = function() require('plugins.indent-blankline') end
+    config = function() require('plugins.indent_blankline') end
   }
 
   use '/usr/local/opt/fzf'
@@ -105,7 +105,7 @@ return require('packer').startup(function(use)
 
   use {
     'vim-ruby/vim-ruby',
-    config = function() require('plugins.vim-ruby') end
+    config = function() require('plugins.vim_ruby') end
   }
 
   use 'tpope/vim-rails'
@@ -133,7 +133,7 @@ return require('packer').startup(function(use)
 
   use {
     'janko-m/vim-test',
-    config = function() require('plugins.vim-test') end
+    config = function() require('plugins.vim_test') end
   }
 
   use 'AndrewRadev/splitjoin.vim'
