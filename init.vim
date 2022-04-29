@@ -39,7 +39,7 @@ set softtabstop=2
 set tabstop=2
 set expandtab
 
-let g:ruby_host_prog = 'rvm 2.7.2@global do neovim-ruby-host'
+" let g:ruby_host_prog = 'rvm 2.7.2@global do neovim-ruby-host'
 let g:node_host_prog = system('volta which neovim-node-host | tr -d "\n"')
 
 let mapleader = ","

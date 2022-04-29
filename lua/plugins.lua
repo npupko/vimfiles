@@ -1,7 +1,7 @@
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  Packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
 vim.cmd([[
@@ -18,6 +18,10 @@ return require('packer').startup(function(use)
   use {
     'evanleck/vim-svelte',
     ft = { 'svelte' },
+    requires = {
+      'othree/html5.vim',
+      'pangloss/vim-javascript',
+    },
     config = function() require('plugins.vim_svelte') end
   }
 
@@ -38,7 +42,7 @@ return require('packer').startup(function(use)
     config = function() require('plugins.vim_jsx_pretty') end
   }
 
-  use { 'leafgarland/typescript-vim', ft = { 'ts' } }
+  use { 'leafgarland/typescript-vim', ft = { 'ts', 'svelte', 'js' } }
   use { 'wavded/vim-stylus', ft = { 'stylus' } }
   use { 'keith/rspec.vim', ft = { 'rb' } }
   use { 'yuezk/vim-js' }
@@ -78,10 +82,10 @@ return require('packer').startup(function(use)
     config = function() require('plugins.nvim_treesitter') end
   }
 
-  use {
-    'Shougo/context_filetype.vim',
-    config = function() require('plugins.context_filetype') end
-  }
+  -- use {
+  --   'Shougo/context_filetype.vim',
+  --   config = function() require('plugins.context_filetype') end
+  -- }
 
   use {
     'lukas-reineke/indent-blankline.nvim',
@@ -117,7 +121,10 @@ return require('packer').startup(function(use)
   }
 
   use 'tpope/vim-repeat'
-  use 'tpope/vim-fugitive'
+  use {
+    'tpope/vim-fugitive',
+    config = function() require('plugins.vim_fugitive') end
+  }
   use 'tpope/vim-endwise'
   use 'tpope/vim-unimpaired'
   use 'tpope/vim-rhubarb'
@@ -158,8 +165,12 @@ return require('packer').startup(function(use)
   use { 'L3MON4D3/LuaSnip' }
   use { 'saadparwaiz1/cmp_luasnip' }
   use { 'rafamadriz/friendly-snippets' }
+  use {
+    'github/copilot.vim',
+    config = function() require('plugins.copilot') end
+  }
 
-  if packer_bootstrap then
+  if Packer_bootstrap then
     require('packer').sync()
   end
 end)

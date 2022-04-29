@@ -500,9 +500,9 @@ require'fzf-lua'.setup {
   -- nbsp = '\xc2\xa0',
 }
 
-vim.api.nvim_set_keymap('n', '<c-P>', "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<c-\\>', "<cmd>lua require('fzf-lua').buffers()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<c-M>', "<cmd>lua require('fzf-lua').oldfiles()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>p', "<cmd>lua require('fzf-lua').live_grep()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<localleader>m', "<cmd>lua require('fzf-lua').keymaps()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>ca', "<cmd>lua require('fzf-lua').lsp_code_actions()<CR>", { noremap = true, silent = true })
+vim.keymap.set('n', '<c-P>', "<cmd>lua require('fzf-lua').files()<CR>")
+vim.keymap.set('n', '<c-\\>', "<cmd>lua require('fzf-lua').buffers()<CR>")
+vim.keymap.set('n', '<localleader><CR>', "<cmd>lua require('fzf-lua').oldfiles()<CR>")
+vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').live_grep()<CR>")
+vim.keymap.set('n', '<localleader>m', "<cmd>lua require('fzf-lua').keymaps()<CR>")
+vim.keymap.set('n', '<localleader>ca', "<cmd>lua require('fzf-lua').lsp_code_actions()<CR>")

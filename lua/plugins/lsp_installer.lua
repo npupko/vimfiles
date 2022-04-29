@@ -5,7 +5,7 @@ local on_attach = function(client, bufnr)
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
 --Enable completion triggered by <c-x><c-o>
-  -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
 -- Mappings.
   local opts = { noremap=true, silent=true }
@@ -15,6 +15,9 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<leader>k', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
@@ -22,10 +25,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
@@ -34,8 +34,21 @@ local lsp_installer = require("nvim-lsp-installer")
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
--- Register a handler that will be called for each installed server when it's ready (i.e. when installation is finished
--- or if the server is already installed).
+require('lspconfig')['solargraph'].setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  settings = {
+    solargraph = {
+      diagnostics = true,
+      completion = true,
+      useBundler = true,
+    }
+  }
+}
+
 lsp_installer.on_server_ready(function(server)
   local opts = {
     capabilities = capabilities,
@@ -44,12 +57,6 @@ lsp_installer.on_server_ready(function(server)
       debounce_text_changes = 150,
     }
   }
-
-
-  -- (optional) Customize the options passed to the server
-  -- if server.name == "tsserver" then
-  --     opts.root_dir = function() ... end
-  -- end
 
   if server.name == "cssls" then
       opts.filetypes = { "css", "scss", "less", "svelte" }
@@ -66,15 +73,18 @@ lsp_installer.on_server_ready(function(server)
   if server.name == "solargraph" then
     opts.settings = {
       solargraph = {
-        -- commandPath = '/Users/kassioborges/.asdf/shims/solargraph',
         diagnostics = true,
         completion = true,
+        -- commandPath = " /Users/random/.rbenv/shims/solargraph",
+        useBundler = true,
+        -- bundlerPath = "/Users/random/.rbenv/shims/bundle",
       }
     }
   end
 
   server:setup(opts)
 end)
+vim.lsp.set_log_level("debug")
 
 vim.diagnostic.config({
   virtual_text = false,
