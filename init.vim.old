@@ -1,0 +1,78 @@
+" vim/neovim config used by Nikita Pupko
+" Author: Nikita Pupko
+" http://github.com/npupko/dotfiles
+" General Config {{{
+
+lua require('init2')
+
+" map <leader>cle :call CopyLinterError()<CR>
+"
+" function! CopyLinterError()
+"   redir @+
+"   1message
+"   redir END
+" endfunction
+
+" nnoremap <leader>v :e $MYVIMRC<CR>
+" nnoremap <leader><c-v> :e /Users/random/.config/nvim/lua/plugins.lua<CR>
+" nnoremap <leader>V :source $MYVIMRC<CR>
+" nnoremap <leader>un :syntax sync fromstart<CR>:redraw!<CR>
+" nnoremap <leader>fef :normal! gg=G``<CR>
+
+" nnoremap <C-k> <C-w><Up>
+" nnoremap <C-j> <C-w><Down>
+" nnoremap <C-l> <C-w><Right>
+" nnoremap <C-h> <C-w><Left>
+
+" nnoremap _cs :setlocal filetype=css<CR>
+" nnoremap _co :setlocal filetype=coffee<CR>
+" nnoremap _ht :setlocal filetype=html<CR>
+" nnoremap _sl :setlocal filetype=slim<CR>
+" nnoremap _js :setlocal filetype=javascript<CR>
+" nnoremap _md :setlocal filetype=markdown<CR>
+" nnoremap _rb :setlocal filetype=ruby<CR>
+" nnoremap _sh :setlocal filetype=sh<CR>
+" nnoremap _vi :setlocal filetype=vim<CR>
+" nnoremap _an :setlocal filetype=yaml.ansible<CR>
+" nnoremap _dc :setlocal filetype=dockerfile<CR>
+
+map <leader>cs :call CreateSpec()<CR>
+
+function! CreateSpec()
+  " This function requires tpope/rails.vim
+  let l:file_path = expand('%')
+  let l:spec_path = substitute(l:file_path, '\vapp\/(.+)\.rb', '\1', '')
+  echo 'Espec ' . l:spec_path . '!'
+  execute 'Espec ' . l:spec_path . '!'
+endfunction
+
+" let g:elite_mode = 1
+" if get(g:, 'elite_mode')
+"   nnoremap <Up>    :resize +2<CR>
+"   nnoremap <Down>  :resize -2<CR>
+"   nnoremap <Left>  :vertical resize +2<CR>
+"   nnoremap <Right> :vertical resize -2<CR>
+" endif
+
+" if has('nvim')
+"   tmap <C-o> <C-\><C-n>
+" end
+
+vnoremap // y/<C-R>"<CR>
+nnoremap <silent> // :nohlsearch<CR>
+inoremap <C-c> <Esc><Esc>
+
+map <leader>/ :call AddPry()<CR>
+
+function! AddPry()
+  if &filetype == 'ruby'
+    execute "normal obinding.pry\<Esc>"
+  elseif &filetype == 'svelte' || &filetype == 'js' || &filetype == 'ts'
+    execute "normal odebugger\<Esc>"
+  else
+    execute "normal obinding.pry\<Esc>"
+  end
+endfunction
+
+
+" vim:foldmethod=marker:

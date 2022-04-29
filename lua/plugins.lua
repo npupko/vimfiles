@@ -13,27 +13,33 @@ vim.cmd([[
 
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
+  use 'tjdevries/nlua.nvim'
 
-  -- Languages
+  -- -- Languages
+  -- use {
+  --   'evanleck/vim-svelte',
+  --   ft = { 'svelte' },
+  --   requires = {
+  --     'othree/html5.vim',
+  --     'pangloss/vim-javascript',
+  --   },
+  --   config = function() require('plugins.vim_svelte') end
+  -- }
+
+  -- use {
+  --   'leafoftree/vim-svelte-plugin',
+  --   ft = { 'svelte' },
+  --   config = function() require('plugins.vim_svelte_plugin') end
+  -- }
+
   use {
-    'evanleck/vim-svelte',
-    ft = { 'svelte' },
-    requires = {
-      'othree/html5.vim',
-      'pangloss/vim-javascript',
-    },
-    config = function() require('plugins.vim_svelte') end
+    'dstein64/vim-startuptime',
+    opt = true,
+    cmd = { 'StartupTime' },
   }
-
-  use {
-    'leafoftree/vim-svelte-plugin',
-    ft = { 'svelte' },
-    config = function() require('plugins.vim_svelte_plugin') end
-  }
-
-  use { 'dstein64/vim-startuptime' }
 
   use { 'vim-crystal/vim-crystal', ft = { 'cr' } }
+
   use { 'ianks/vim-tsx', ft = { 'tsx' } }
 
   use {
@@ -42,13 +48,13 @@ return require('packer').startup(function(use)
     config = function() require('plugins.vim_jsx_pretty') end
   }
 
-  use { 'leafgarland/typescript-vim', ft = { 'ts', 'svelte', 'js' } }
-  use { 'wavded/vim-stylus', ft = { 'stylus' } }
+  -- use { 'leafgarland/typescript-vim', ft = { 'ts', 'svelte', 'js' } }
+  -- use { 'wavded/vim-stylus', ft = { 'stylus' } }
   use { 'keith/rspec.vim', ft = { 'rb' } }
-  use { 'yuezk/vim-js' }
+  -- use { 'yuezk/vim-js' }
 
   -- Colorschemes
-  use 'jacoborus/tender.vim'
+  use { 'jacoborus/tender.vim', opt = true }
   use { "ellisonleao/gruvbox.nvim" }
 
   -- Plugins
@@ -60,16 +66,7 @@ return require('packer').startup(function(use)
     config = function() require('plugins.nvim_tree') end
   }
 
-  -- use {
-  --   'ms-jpq/chadtree',
-  --   branch = 'chad',
-  --   run = ':CHADdeps',
-  --   config = function() require('plugins.chadtree') end
-  -- }
-
-  use {
-    'neovim/nvim-lspconfig'
-  }
+  use { 'neovim/nvim-lspconfig' }
 
   use {
     'williamboman/nvim-lsp-installer',
@@ -93,7 +90,6 @@ return require('packer').startup(function(use)
   }
 
   use '/usr/local/opt/fzf'
-  -- use 'junegunn/fzf.vim'
 
   use {
     'ibhagwan/fzf-lua',
@@ -128,6 +124,7 @@ return require('packer').startup(function(use)
   use 'tpope/vim-endwise'
   use 'tpope/vim-unimpaired'
   use 'tpope/vim-rhubarb'
+
   use 'jparise/vim-graphql'
 
   use {
@@ -145,26 +142,23 @@ return require('packer').startup(function(use)
 
   use 'AndrewRadev/splitjoin.vim'
 
-  -- use {
-  --   'ms-jpq/coq_nvim',
-  --   config = function() require('plugins.coq_nvim') end
-  -- }
-  -- use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
-  --
   -- Icons for the autocompletion
   use { 'onsails/lspkind-nvim' }
+
   use {
     'hrsh7th/cmp-nvim-lsp',
     config = function() require('plugins.cmp_lsp') end
   }
+
   use { 'hrsh7th/cmp-buffer' }
   use { 'hrsh7th/cmp-path' }
-  -- use { 'hrsh7th/cmp-cmdline' }
   use { 'hrsh7th/nvim-cmp' }
   use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
+  -- use { 'hrsh7th/cmp-vsnip' }
+  -- use { 'hrsh7th/vim-vsnip' }
   use { 'L3MON4D3/LuaSnip' }
-  use { 'saadparwaiz1/cmp_luasnip' }
-  use { 'rafamadriz/friendly-snippets' }
+  -- use { 'saadparwaiz1/cmp_luasnip' }
+  -- use { 'rafamadriz/friendly-snippets' }
   use {
     'github/copilot.vim',
     config = function() require('plugins.copilot') end

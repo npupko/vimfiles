@@ -1,13 +1,13 @@
 local lspkind = require('lspkind')
 local luasnip = require'luasnip'
+--
+-- require("luasnip.loaders.from_vscode").lazy_load()
+-- luasnip.filetype_extend("ruby", {"rails"})
 
-require("luasnip.loaders.from_vscode").lazy_load()
-luasnip.filetype_extend("ruby", {"rails"})
-
-local has_words_before = function()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
+-- local has_words_before = function()
+--   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+--   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+-- end
 
 vim.opt.completeopt = 'menu,menuone,noselect'
 
@@ -40,22 +40,18 @@ cmp.setup({
           behavior = cmp.ConfirmBehavior.Replace,
           select = true,
         })
-      elseif luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
-      elseif has_words_before() then
-        cmp.complete()
       else
         fallback()
       end
     end, { "i", "s" }),
 
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
+    -- ["<S-Tab>"] = cmp.mapping(function(fallback)
+    --   if luasnip.jumpable(-1) then
+    --     luasnip.jump(-1)
+    --   else
+    --     fallback()
+    --   end
+    -- end, { "i", "s" }),
     ['<C-y>'] = cmp.config.disable,
     ['<C-e>'] = cmp.mapping({
       i = cmp.mapping.abort(),
