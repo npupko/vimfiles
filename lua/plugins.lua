@@ -91,17 +91,21 @@ return require('packer').startup(function(use)
 
   use '/usr/local/opt/fzf'
 
+  -- use {
+  --   'ibhagwan/fzf-lua',
+  --   requires = { 'kyazdani42/nvim-web-devicons' },
+  --   config = function() require('plugins.fzf_lua') end
+  -- }
+
   use {
-    'ibhagwan/fzf-lua',
-    requires = { 'kyazdani42/nvim-web-devicons' },
-    config = function() require('plugins.fzf_lua') end
+    'nvim-telescope/telescope.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim',
+    },
+    config = function() require('plugins.telescope') end
   }
 
-  -- use {
-  --   'nvim-telescope/telescope.nvim',
-  --   requires = { 'nvim-lua/plenary.nvim' },
-  --   config = function() require('plugins.telescope') end
-  -- }
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
   use {
     'vim-ruby/vim-ruby',
@@ -148,6 +152,13 @@ return require('packer').startup(function(use)
   use {
     'hrsh7th/cmp-nvim-lsp',
     config = function() require('plugins.cmp_lsp') end
+  }
+
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      require("which-key").setup { }
+    end
   }
 
   use { 'hrsh7th/cmp-buffer' }

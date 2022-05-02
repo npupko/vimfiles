@@ -77,7 +77,7 @@ vim.keymap.set('n', '<leader>q', M.CloseCurrentBuffer, { silent = true })
 vim.keymap.set('n', '<leader>d', M.DeleteHiddenBuffers, { silent = true })
 
 if fn.has('persistent_undo') == 1 then
-  opt.undodir = '~/.vim/backups'
+  opt.undodir = '/Users/random/.vim/backups'
   opt.undofile = true
 end
 

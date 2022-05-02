@@ -44,7 +44,7 @@ require('lspconfig')['solargraph'].setup {
     solargraph = {
       diagnostics = true,
       completion = true,
-      useBundler = true,
+      useBundler = false,
     }
   }
 }
