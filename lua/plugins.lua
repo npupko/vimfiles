@@ -169,10 +169,10 @@ return require('packer').startup(function(use)
   use { 'L3MON4D3/LuaSnip' }
   use { 'saadparwaiz1/cmp_luasnip' }
 
-  use {
-    'github/copilot.vim',
-    config = function() require('plugins.copilot') end
-  }
+  -- use {
+  --   'github/copilot.vim',
+  --   config = function() require('plugins.copilot') end
+  -- }
 
   if Packer_bootstrap then
     require('packer').sync()

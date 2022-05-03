@@ -15,14 +15,14 @@ cmp.setup({
   },
   preselect = cmp.PreselectMode.None,
   mapping = {
-    ['<C-c>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.mapping.close()
-        fallback()
-      else
-        fallback()
-      end
-    end),
+    -- ['<C-c>'] = cmp.mapping(function(fallback)
+    --   if cmp.visible() then
+    --     cmp.mapping.close()
+    --     fallback()
+    --   else
+    --     fallback()
+    --   end
+    -- end),
     ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
 		['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
   --   ['<C-p>'] = cmp.mapping.select_prev_item(),

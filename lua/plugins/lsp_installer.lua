@@ -32,60 +32,71 @@ end
 
 local lsp_installer = require("nvim-lsp-installer")
 local lspconfig = require('lspconfig')
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 lsp_installer.setup {}
 
-lspconfig.solargraph.setup {
-  capabilities = capabilities,
-  on_attach = on_attach,
-  flags = {
-    debounce_text_changes = 150,
-  },
-  settings = {
-    solargraph = {
-      diagnostics = true,
-      completion = true,
-      useBundler = false,
-    }
+-- Enable the following language servers
+local servers = { 'solargraph', 'cssls', 'sumneko_lua', 'tsserver', 'svelte', 'vimls' }
+
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, 'lua/?.lua')
+table.insert(runtime_path, 'lua/?/init.lua')
+
+for _, lsp in ipairs(servers) do
+  local opts = {
+    on_attach = on_attach,
+    capabilities = capabilities,
   }
-}
 
-lspconfig.cssls.setup{
-  capabilities = capabilities,
-  on_attach = on_attach,
-  flags = {
-    debounce_text_changes = 150,
-  },
-  filetypes = { "css", "scss", "less" }
-}
+  if lsp == 'solargraph' then
+    opts.settings = {
+      solargraph = {
+        diagnostics = true,
+        completion = true,
+        useBundler = false,
+      }
+    }
+  end
 
-lspconfig.sumneko_lua.setup{
-  capabilities = capabilities,
-  on_attach = on_attach,
-  flags = {
-    debounce_text_changes = 150,
-  },
-  filetypes = { "lua" }
-}
+  if lsp == 'cssls' then
+    opts.filetypes = { "css", "scss", "less" }
+  end
 
-lspconfig.tsserver.setup{
-  capabilities = capabilities,
-  on_attach = on_attach,
-  flags = {
-    debounce_text_changes = 150,
-  },
-  filetypes = { "typescript" }
-}
+  if lsp == 'sumneko_lua' then
+    opts.filetypes = { "lua" }
+    opts.settings = {
+      Lua = {
+        runtime = {
+          version = 'LuaJIT',
+          path = runtime_path,
+        },
+        diagnostics = {
+          globals = { 'vim' },
+        },
+        workspace = {
+          library = vim.api.nvim_get_runtime_file('', true),
+        },
+        telemetry = {
+          enable = false,
+        },
+      },
+    }
+  end
 
-lspconfig.svelte.setup{
-  capabilities = capabilities,
-  on_attach = on_attach,
-  flags = {
-    debounce_text_changes = 150,
-  },
-  filetypes = { "svelte" }
-}
+  if lsp == 'tsserver' then
+    opts.filetypes = { "typescript" }
+  end
+
+  if lsp == 'svelte' then
+    opts.filetypes = { "svelte" }
+  end
+
+  lspconfig[lsp].setup(opts)
+end
+
 -- vim.lsp.set_log_level("debug")
 
 vim.diagnostic.config({
