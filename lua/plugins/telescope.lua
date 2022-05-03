@@ -1,8 +1,8 @@
 local T = require('telescope.builtin')
 
 vim.keymap.set('n', '<c-P>', T.find_files)
-vim.keymap.set('n', '<c-\\>', T.buffers)
-vim.keymap.set('n', '<c-M>', T.oldfiles)
+vim.keymap.set('n', '<c-\\>', function () T.buffers { sort_lastused = true } end)
+vim.keymap.set('n', '<c-Enter>', T.oldfiles)
 vim.keymap.set('n', '<leader>p', T.live_grep)
 vim.keymap.set('n', '<localleader>m', T.keymaps)
 -- vim.api.nvim_set_keymap('n', '<c-P>', "<cmd>lua require('telescope.builtin').find_files()<CR>", { noremap = true, silent = true })

@@ -31,10 +31,12 @@ local on_attach = function(client, bufnr)
 end
 
 local lsp_installer = require("nvim-lsp-installer")
-
+local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-require('lspconfig')['solargraph'].setup {
+lsp_installer.setup {}
+
+lspconfig.solargraph.setup {
   capabilities = capabilities,
   on_attach = on_attach,
   flags = {
@@ -49,42 +51,42 @@ require('lspconfig')['solargraph'].setup {
   }
 }
 
-lsp_installer.on_server_ready(function(server)
-  local opts = {
-    capabilities = capabilities,
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
-    }
-  }
+lspconfig.cssls.setup{
+  capabilities = capabilities,
+  on_attach = on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  filetypes = { "css", "scss", "less" }
+}
 
-  if server.name == "cssls" then
-      opts.filetypes = { "css", "scss", "less", "svelte" }
-  end
+lspconfig.sumneko_lua.setup{
+  capabilities = capabilities,
+  on_attach = on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  filetypes = { "lua" }
+}
 
-  if server.name == "cssmodules_ls" then
-      opts.filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "svelte" }
-  end
+lspconfig.tsserver.setup{
+  capabilities = capabilities,
+  on_attach = on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  filetypes = { "typescript" }
+}
 
-  if server.name == "emmet_ls" then
-      opts.filetypes = { "html", "css", "svelte" }
-  end
-
-  if server.name == "solargraph" then
-    opts.settings = {
-      solargraph = {
-        diagnostics = true,
-        completion = true,
-        -- commandPath = " /Users/random/.rbenv/shims/solargraph",
-        useBundler = true,
-        -- bundlerPath = "/Users/random/.rbenv/shims/bundle",
-      }
-    }
-  end
-
-  server:setup(opts)
-end)
-vim.lsp.set_log_level("debug")
+lspconfig.svelte.setup{
+  capabilities = capabilities,
+  on_attach = on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  filetypes = { "svelte" }
+}
+-- vim.lsp.set_log_level("debug")
 
 vim.diagnostic.config({
   virtual_text = false,

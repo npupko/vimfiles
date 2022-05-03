@@ -14,6 +14,7 @@ vim.cmd([[
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'tjdevries/nlua.nvim'
+  use 'fladson/vim-kitty'
 
   -- -- Languages
   -- use {
@@ -146,6 +147,13 @@ return require('packer').startup(function(use)
 
   use 'AndrewRadev/splitjoin.vim'
 
+  -- use {
+  --   "folke/which-key.nvim",
+  --   config = function()
+  --     require("which-key").setup { }
+  --   end
+  -- }
+
   -- Icons for the autocompletion
   use { 'onsails/lspkind-nvim' }
 
@@ -154,22 +162,13 @@ return require('packer').startup(function(use)
     config = function() require('plugins.cmp_lsp') end
   }
 
-  use {
-    "folke/which-key.nvim",
-    config = function()
-      require("which-key").setup { }
-    end
-  }
-
   use { 'hrsh7th/cmp-buffer' }
   use { 'hrsh7th/cmp-path' }
   use { 'hrsh7th/nvim-cmp' }
   use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
-  -- use { 'hrsh7th/cmp-vsnip' }
-  -- use { 'hrsh7th/vim-vsnip' }
   use { 'L3MON4D3/LuaSnip' }
-  -- use { 'saadparwaiz1/cmp_luasnip' }
-  -- use { 'rafamadriz/friendly-snippets' }
+  use { 'saadparwaiz1/cmp_luasnip' }
+
   use {
     'github/copilot.vim',
     config = function() require('plugins.copilot') end

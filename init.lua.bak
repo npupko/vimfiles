@@ -83,7 +83,7 @@ end
 
 vim.cmd("let $NVIM_TUI_ENABLE_TRUE_COLOR=1")
 
--- opt.termguicolors = true
+opt.termguicolors = true
 opt.background = 'dark'
 vim.cmd('colorscheme gruvbox')
 

@@ -1,13 +1,7 @@
 local lspkind = require('lspkind')
 local luasnip = require'luasnip'
---
--- require("luasnip.loaders.from_vscode").lazy_load()
--- luasnip.filetype_extend("ruby", {"rails"})
 
--- local has_words_before = function()
---   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
---   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
--- end
+-- vim.keymap.set('i', '<C-x><C-o>', require('cmp').complete)
 
 vim.opt.completeopt = 'menu,menuone,noselect'
 
@@ -16,12 +10,19 @@ local cmp = require'cmp'
 cmp.setup({
   snippet = {
     expand = function(args)
-      -- vim.fn["vsnip#anonymous"](args.body)
       luasnip.lsp_expand(args.body)
     end,
   },
   preselect = cmp.PreselectMode.None,
   mapping = {
+    ['<C-c>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.mapping.close()
+        fallback()
+      else
+        fallback()
+      end
+    end),
     ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
 		['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
   --   ['<C-p>'] = cmp.mapping.select_prev_item(),
@@ -44,14 +45,6 @@ cmp.setup({
         fallback()
       end
     end, { "i", "s" }),
-
-    -- ["<S-Tab>"] = cmp.mapping(function(fallback)
-    --   if luasnip.jumpable(-1) then
-    --     luasnip.jump(-1)
-    --   else
-    --     fallback()
-    --   end
-    -- end, { "i", "s" }),
     ['<C-y>'] = cmp.config.disable,
     ['<C-e>'] = cmp.mapping({
       i = cmp.mapping.abort(),
@@ -69,7 +62,7 @@ cmp.setup({
     format = lspkind.cmp_format({
       with_text = true,
       mode = 'symbol_text',
-      maxwidth = 50,
+      maxwidth = 60,
       menu = ({
         cmp_tabnine = "[T9]",
         nvim_lsp = "[LSP]",
@@ -80,6 +73,16 @@ cmp.setup({
       })
     })
   },
+  -- completion = {
+  --   autocomplete = true
+  -- },
+  experimental = {
+    ghost_text = false
+  },
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    -- documentation = cmp.config.window.bordered(),
+  },
   sources = cmp.config.sources({
     { name = 'cmp_tabnine' },
     { name = 'luasnip' },
@@ -87,6 +90,19 @@ cmp.setup({
     { name = 'path' },
   }, {
     { name = 'buffer' },
-  })
+  }),
+  -- sorting = {
+  --   priority_weight = 2,
+  --   comparators = {
+  --     require('cmp_tabnine.compare'),
+  --     compare.offset,
+  --     compare.exact,
+  --     compare.score,
+  --     compare.recently_used,
+  --     compare.kind,
+  --     compare.sort_text,
+  --     compare.length,
+  --     compare.order,
+  --   },
+  -- },
 })
-
