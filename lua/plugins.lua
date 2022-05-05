@@ -11,7 +11,13 @@ vim.cmd([[
   augroup end
 ]])
 
-return require('packer').startup(function(use)
+local config = {
+  -- display = {
+  --   open_fn = require('packer.util').float,
+  -- }
+}
+
+return require('packer').startup({function(use)
   use 'wbthomason/packer.nvim'
   use 'tjdevries/nlua.nvim'
   use 'fladson/vim-kitty'
@@ -39,15 +45,15 @@ return require('packer').startup(function(use)
     cmd = { 'StartupTime' },
   }
 
-  use { 'vim-crystal/vim-crystal', ft = { 'cr' } }
+  -- use { 'vim-crystal/vim-crystal', ft = { 'cr' } }
 
-  use { 'ianks/vim-tsx', ft = { 'tsx' } }
+  -- use { 'ianks/vim-tsx', ft = { 'tsx' } }
 
-  use {
-    'MaxMEllon/vim-jsx-pretty',
-    ft = { 'jsx' },
-    config = function() require('plugins.vim_jsx_pretty') end
-  }
+  -- use {
+  --   'MaxMEllon/vim-jsx-pretty',
+  --   ft = { 'jsx' },
+  --   config = function() require('plugins.vim_jsx_pretty') end
+  -- }
 
   -- use { 'leafgarland/typescript-vim', ft = { 'ts', 'svelte', 'js' } }
   -- use { 'wavded/vim-stylus', ft = { 'stylus' } }
@@ -55,7 +61,7 @@ return require('packer').startup(function(use)
   -- use { 'yuezk/vim-js' }
 
   -- Colorschemes
-  use { 'jacoborus/tender.vim', opt = true }
+  -- use { 'jacoborus/tender.vim', opt = true }
   use { "ellisonleao/gruvbox.nvim" }
 
   -- Plugins
@@ -71,7 +77,7 @@ return require('packer').startup(function(use)
 
   use {
     'williamboman/nvim-lsp-installer',
-    config = function() require('plugins.lsp_installer') end
+    -- config = function() require('plugins.lsp_installer') end
   }
 
   use {
@@ -79,6 +85,10 @@ return require('packer').startup(function(use)
     run = ':TSUpdate',
     config = function() require('plugins.nvim_treesitter') end
   }
+
+  use { 'nvim-treesitter/nvim-treesitter-textobjects' }
+  use { 'JoosepAlviste/nvim-ts-context-commentstring' }
+
 
   -- use {
   --   'Shougo/context_filetype.vim',
@@ -89,8 +99,7 @@ return require('packer').startup(function(use)
     'lukas-reineke/indent-blankline.nvim',
     config = function() require('plugins.indent_blankline') end
   }
-
-  use '/usr/local/opt/fzf'
+  -- use '/usr/local/opt/fzf'
 
   -- use {
   --   'ibhagwan/fzf-lua',
@@ -113,12 +122,16 @@ return require('packer').startup(function(use)
     config = function() require('plugins.vim_ruby') end
   }
 
-  use 'tpope/vim-rails'
+  use  {
+    'tpope/vim-rails',
+    config = function() require('plugins.vim_rails') end
+  }
   use 'tpope/vim-surround'
+  use 'tpope/vim-dispatch'
 
   use {
     'numToStr/Comment.nvim',
-    config = function() require('Comment').setup() end
+    config = function() require('plugins.Comment') end
   }
 
   use 'tpope/vim-repeat'
@@ -147,35 +160,47 @@ return require('packer').startup(function(use)
 
   use 'AndrewRadev/splitjoin.vim'
 
+  use {
+    'github/copilot.vim',
+    config = function() require('plugins.copilot') end
+  }
+
+  use {
+    'mattn/vim-gist',
+    requires = { 'mattn/webapi-vim' },
+  }
+
   -- use {
-  --   "folke/which-key.nvim",
+  --   'takac/vim-hardtime',
   --   config = function()
-  --     require("which-key").setup { }
+  --     vim.g.hardtime_default_on = 1
+  --     vim.g.hardtime_motion_with_count_resets = 1
+  --     vim.g.hardtime_allow_different_key = 1
+  --     vim.g.hardtime_ignore_buffer_patterns = { "NvimTree.*", "help.*" }
   --   end
   -- }
 
-  -- Icons for the autocompletion
-  use { 'onsails/lspkind-nvim' }
-
+  -- cmp plugins
   use {
-    'hrsh7th/cmp-nvim-lsp',
-    config = function() require('plugins.cmp_lsp') end
+    "hrsh7th/nvim-cmp",
+    config = function() require('plugins.cmp_lsp') end,
+    -- commit = 'bba6fb67fdafc0af7c5454058dfbabc2182741f4'
   }
-
-  use { 'hrsh7th/cmp-buffer' }
-  use { 'hrsh7th/cmp-path' }
-  use { 'hrsh7th/nvim-cmp' }
+  use "onsails/lspkind.nvim"
+  use "hrsh7th/cmp-buffer" -- buffer completions
+  use "hrsh7th/cmp-path" -- path completions
+  use "hrsh7th/cmp-cmdline" -- cmdline completions
+  use "saadparwaiz1/cmp_luasnip" -- snippet completions
+  use "hrsh7th/cmp-nvim-lsp"
   use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
-  use { 'L3MON4D3/LuaSnip' }
-  use { 'saadparwaiz1/cmp_luasnip' }
 
-  -- use {
-  --   'github/copilot.vim',
-  --   config = function() require('plugins.copilot') end
-  -- }
+  use "L3MON4D3/LuaSnip" --snippet engine
+  use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
   if Packer_bootstrap then
     require('packer').sync()
   end
-end)
+end,
+config = config
+})
 

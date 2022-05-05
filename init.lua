@@ -13,9 +13,17 @@ opt.number = true
 opt.confirm = true
 opt.hidden = false
 opt.clipboard:append({"unnamedplus"})
+opt.list = true
 opt.listchars = { tab = '  ', trail = '·', eol = '¬' }
 opt.wrap = false
-opt.path:prepend({"**"})
+opt.path:remove "/usr/include"
+opt.path:append "**"
+opt.undofile = true
+opt.signcolumn = 'yes'
+
+opt.foldlevel = 20
+opt.foldmethod = 'expr'
+opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
 -- Fuzzy matching
 opt.wildmenu = true
@@ -76,11 +84,6 @@ end
 vim.keymap.set('n', '<leader>q', M.CloseCurrentBuffer, { silent = true })
 vim.keymap.set('n', '<leader>d', M.DeleteHiddenBuffers, { silent = true })
 
-if fn.has('persistent_undo') == 1 then
-  opt.undodir = '/Users/random/.vim/backups'
-  opt.undofile = true
-end
-
 vim.cmd("let $NVIM_TUI_ENABLE_TRUE_COLOR=1")
 
 -- opt.termguicolors = true
@@ -129,7 +132,14 @@ vim.keymap.set('v', 'Q', ':norm @q<CR>', { silent = true })
 
 vim.keymap.set('v', '//', 'y/<C-R>"<CR>', { silent = true })
 vim.keymap.set('n', '//', ':nohlsearch<CR>', { silent = true })
--- vim.keymap.set('n', '<C-c>', '<Esc><Esc>', { silent = true })
+-- vim.keymap.set('i', '<C-c>', '<Esc><Esc>', { silent = true })
+vim.keymap.set('i', '<C-c>', '<NOP>', { silent = true })
+
+-- Expand filename for commands like Espec
+vim.keymap.set('c', '<c-e>', [[<C-R>=substitute(expand('%:r'), '^app[^/]*.', '', '')<CR>]])
+
+-- Open quickfix error in quickfix window
+vim.keymap.set('n', '<localleader>q', [[:cg .git/quickfix.out<CR> :cwindow<CR>]])
 
 function M.contains(list, x)
 	for _, v in pairs(list) do
@@ -163,3 +173,4 @@ vim.g.loaded_sql_completion = 0
 vim.g.omni_sql_no_default_maps = 1
 
 require('plugins')
+require('plugins.lsp')

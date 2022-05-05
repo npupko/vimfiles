@@ -6,6 +6,7 @@ local on_attach = function(client, bufnr)
 
 --Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  buf_set_option("formatexpr", "v:lua.vim.lsp.formatexpr()")
 
 -- Mappings.
   local opts = { noremap=true, silent=true }
@@ -34,7 +35,6 @@ local lsp_installer = require("nvim-lsp-installer")
 local lspconfig = require('lspconfig')
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 lsp_installer.setup {}
 
