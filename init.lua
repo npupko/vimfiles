@@ -151,11 +151,11 @@ end
 function M.addDebuggerToNextLine()
   local filetype = vim.bo.filetype
   if filetype == 'lua' then
-    vim.api.nvim_command('normal obinding.pry<Esc>')
+    vim.api.nvim_command('normal obinding.pry')
   elseif M.contains({'svelte', 'js', 'ts'}, filetype) then
-    vim.api.nvim_command('normal odebugger<Esc>')
+    vim.api.nvim_command('normal odebugger')
   else
-    vim.api.nvim_command('normal obinding.pry<Esc>')
+    vim.api.nvim_command('normal obinding.pry')
   end
 end
 

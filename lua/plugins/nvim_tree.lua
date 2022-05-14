@@ -12,6 +12,10 @@ require("nvim-tree").setup({
   renderer = {
     indent_markers = {
       enable = false,
+    },
+    icons = {
+      webdev_colors = true,
+      git_placement = "after",
     }
   },
   update_focused_file = {

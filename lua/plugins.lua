@@ -19,6 +19,27 @@ local config = {
 
 return require('packer').startup({function(use)
   use 'wbthomason/packer.nvim'
+
+  -- use {
+  --   'rcarriga/nvim-notify',
+  --   config = function()
+  --     vim.notify = require("notify")
+  --   end
+  -- }
+  --
+  -- use {
+  --   'mfussenegger/nvim-dap',
+  --   config = function() require('plugins.dap') end,
+  -- }
+  --
+  -- use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+  -- use { 'Pocco81/dap-buddy.nvim', commit = 'ccb6b325732cb976356345a903d2c6af573ff191' }
+
+  use {
+    'kyazdani42/nvim-web-devicons',
+    config = function() require("nvim-web-devicons").setup{ default = true } end,
+  }
+
   use 'tjdevries/nlua.nvim'
   use 'fladson/vim-kitty'
 
