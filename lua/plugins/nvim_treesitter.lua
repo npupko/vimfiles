@@ -6,7 +6,7 @@ require'nvim-treesitter.configs'.setup {
   -- One of "all", "maintained" (parsers with maintainers), or a list of languages
   ensure_installed = "all",
   sync_install = false,
-
+  ignore_install = { "phpdoc" },
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false,

@@ -5,6 +5,7 @@ end
 
 local lspconfig = require("lspconfig")
 
+-- local servers = { 'cssls', 'sumneko_lua', 'tsserver', 'svelte', 'vimls', 'solidity_ls', 'rust_analyzer', 'eslint' }
 local servers = { 'cssls', 'sumneko_lua', 'tsserver', 'svelte', 'vimls', 'solidity_ls', 'rust_analyzer' }
 
 lsp_installer.setup {

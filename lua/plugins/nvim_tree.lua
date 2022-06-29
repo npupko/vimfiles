@@ -1,13 +1,6 @@
 vim.api.nvim_set_keymap('n', '<leader><leader>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>m', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
 
-vim.g.nvim_tree_show_icons = {
-  folders = 1,
-  files = 1,
-  git = 1,
-  folder_arrows = 1,
-}
-
 require("nvim-tree").setup({
   renderer = {
     indent_markers = {
@@ -16,6 +9,12 @@ require("nvim-tree").setup({
     icons = {
       webdev_colors = true,
       git_placement = "after",
+      show = {
+        folder = true,
+        file = true,
+        git = true,
+        folder_arrow = true,
+      }
     }
   },
   update_focused_file = {

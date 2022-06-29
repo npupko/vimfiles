@@ -20,6 +20,8 @@ local config = {
 return require('packer').startup({function(use)
   use 'wbthomason/packer.nvim'
 
+  use "kchmck/vim-coffee-script"
+
   -- use {
   --   'rcarriga/nvim-notify',
   --   config = function()
