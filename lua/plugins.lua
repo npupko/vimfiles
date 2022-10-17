@@ -32,21 +32,21 @@ return require('packer').startup({function(use)
   use 'fladson/vim-kitty'
   use "kchmck/vim-coffee-script"
 
-  use {
-    'evanleck/vim-svelte',
-    ft = { 'svelte' },
-    requires = {
-      'othree/html5.vim',
-      'pangloss/vim-javascript',
-    },
-    config = function() require('plugins.vim_svelte') end
-  }
-
-  use {
-    'leafoftree/vim-svelte-plugin',
-    ft = { 'svelte' },
-    config = function() require('plugins.vim_svelte_plugin') end
-  }
+  -- use {
+  --   'leafoftree/vim-svelte-plugin',
+  --   ft = { 'svelte' },
+  --   config = function() require('plugins.vim_svelte_plugin') end
+  -- }
+  --
+  -- use {
+  --   'evanleck/vim-svelte',
+  --   ft = { 'svelte' },
+  --   requires = {
+  --     'othree/html5.vim',
+  --     'pangloss/vim-javascript',
+  --   },
+  --   config = function() require('plugins.vim_svelte') end
+  -- }
 
   use {
     'dstein64/vim-startuptime',
@@ -71,12 +71,33 @@ return require('packer').startup({function(use)
     config = function() require('plugins.nvim_tree') end
   }
 
-  use { 'neovim/nvim-lspconfig' }
+  -- use { 'neovim/nvim-lspconfig' }
+  -- use {
+  --   'williamboman/nvim-lsp-installer',
+  --   -- config = function() require('plugins.lsp_installer') end
+  -- }
+
+  use { "williamboman/mason.nvim" }
+  use { "williamboman/mason-lspconfig.nvim" }
+  use { "jose-elias-alvarez/null-ls.nvim" }
 
   use {
-    'williamboman/nvim-lsp-installer',
-    -- config = function() require('plugins.lsp_installer') end
+    "neovim/nvim-lspconfig",
+    requires = {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "jose-elias-alvarez/null-ls.nvim" 
+    },
+    config = function()
+      require('plugins.mason')
+    end
   }
+
+  -- use {
+  --   "williamboman/mason.nvim",
+  --   "williamboman/mason-lspconfig.nvim",
+  --   "neovim/nvim-lspconfig",
+  -- }
 
   use {
     'nvim-treesitter/nvim-treesitter',
