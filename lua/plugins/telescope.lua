@@ -1,5 +1,4 @@
 local T = require('telescope.builtin')
-local F = require('telescope.builtin.files')
 local M = {}
 
 vim.keymap.set('n', '<c-P>', T.find_files)
@@ -7,7 +6,7 @@ vim.keymap.set('n', '<c-\\>', function () T.buffers { sort_lastused = true } end
 vim.keymap.set('n', '<c-Enter>', T.oldfiles)
 vim.keymap.set('n', '<leader>p', T.live_grep)
 vim.keymap.set('n', '<localleader>m', T.keymaps)
-vim.keymap.set('n', '<localleader>g', function() F.grep_string({search = vim.fn.expand("<cword>")}) end)
+vim.keymap.set('n', '<localleader>g', function() T.grep_string({search = vim.fn.expand("<cword>")}) end)
 
 function M.grepWithPrompt() vim.ui.input({prompt = 'Grep > '}, function(value) require('telescope.builtin').grep_string({search = value}) end) end
 

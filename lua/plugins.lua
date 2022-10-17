@@ -20,22 +20,6 @@ local config = {
 return require('packer').startup({function(use)
   use 'wbthomason/packer.nvim'
 
-  use "kchmck/vim-coffee-script"
-
-  -- use {
-  --   'rcarriga/nvim-notify',
-  --   config = function()
-  --     vim.notify = require("notify")
-  --   end
-  -- }
-  --
-  -- use {
-  --   'mfussenegger/nvim-dap',
-  --   config = function() require('plugins.dap') end,
-  -- }
-  --
-  -- use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
-  -- use { 'Pocco81/dap-buddy.nvim', commit = 'ccb6b325732cb976356345a903d2c6af573ff191' }
 
   use {
     'kyazdani42/nvim-web-devicons',
@@ -43,24 +27,26 @@ return require('packer').startup({function(use)
   }
 
   use 'tjdevries/nlua.nvim'
-  use 'fladson/vim-kitty'
 
   -- -- Languages
-  -- use {
-  --   'evanleck/vim-svelte',
-  --   ft = { 'svelte' },
-  --   requires = {
-  --     'othree/html5.vim',
-  --     'pangloss/vim-javascript',
-  --   },
-  --   config = function() require('plugins.vim_svelte') end
-  -- }
+  use 'fladson/vim-kitty'
+  use "kchmck/vim-coffee-script"
 
-  -- use {
-  --   'leafoftree/vim-svelte-plugin',
-  --   ft = { 'svelte' },
-  --   config = function() require('plugins.vim_svelte_plugin') end
-  -- }
+  use {
+    'evanleck/vim-svelte',
+    ft = { 'svelte' },
+    requires = {
+      'othree/html5.vim',
+      'pangloss/vim-javascript',
+    },
+    config = function() require('plugins.vim_svelte') end
+  }
+
+  use {
+    'leafoftree/vim-svelte-plugin',
+    ft = { 'svelte' },
+    config = function() require('plugins.vim_svelte_plugin') end
+  }
 
   use {
     'dstein64/vim-startuptime',
@@ -68,18 +54,7 @@ return require('packer').startup({function(use)
     cmd = { 'StartupTime' },
   }
 
-  -- use { 'vim-crystal/vim-crystal', ft = { 'cr' } }
-
-  -- use { 'ianks/vim-tsx', ft = { 'tsx' } }
-
-  -- use {
-  --   'MaxMEllon/vim-jsx-pretty',
-  --   ft = { 'jsx' },
-  --   config = function() require('plugins.vim_jsx_pretty') end
-  -- }
-
   -- use { 'leafgarland/typescript-vim', ft = { 'ts', 'svelte', 'js' } }
-  -- use { 'wavded/vim-stylus', ft = { 'stylus' } }
   use { 'keith/rspec.vim', ft = { 'rb' } }
   -- use { 'yuezk/vim-js' }
 
@@ -112,16 +87,11 @@ return require('packer').startup({function(use)
   use { 'nvim-treesitter/nvim-treesitter-textobjects' }
   use { 'JoosepAlviste/nvim-ts-context-commentstring' }
 
-
-  -- use {
-  --   'Shougo/context_filetype.vim',
-  --   config = function() require('plugins.context_filetype') end
-  -- }
-
   use {
     'lukas-reineke/indent-blankline.nvim',
     config = function() require('plugins.indent_blankline') end
   }
+
   -- use '/usr/local/opt/fzf'
 
   -- use {
@@ -215,7 +185,7 @@ return require('packer').startup({function(use)
   use "hrsh7th/cmp-cmdline" -- cmdline completions
   use "saadparwaiz1/cmp_luasnip" -- snippet completions
   use "hrsh7th/cmp-nvim-lsp"
-  use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
+  -- use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
 
   use "L3MON4D3/LuaSnip" --snippet engine
   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use

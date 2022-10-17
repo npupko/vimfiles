@@ -6,13 +6,13 @@ end
 local lspconfig = require("lspconfig")
 
 -- local servers = { 'cssls', 'sumneko_lua', 'tsserver', 'svelte', 'vimls', 'solidity_ls', 'rust_analyzer', 'eslint' }
-local servers = { 'cssls', 'sumneko_lua', 'tsserver', 'svelte', 'vimls', 'solidity_ls', 'rust_analyzer' }
+local servers = { 'cssls', 'sumneko_lua', 'tsserver', 'svelte', 'vimls', 'solidity_ls', 'rust_analyzer', 'tailwindcss' }
 
 lsp_installer.setup {
 	ensure_installed = servers
 }
 
-table.insert(servers, 'solargraph')
+-- table.insert(servers, 'solargraph')
 
 for _, server in pairs(servers) do
 	local opts = {

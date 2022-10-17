@@ -20,6 +20,9 @@ opt.path:remove "/usr/include"
 opt.path:append "**"
 opt.undofile = true
 opt.signcolumn = 'yes'
+-- disable mouse
+opt.mouse = ''
+
 
 opt.foldlevel = 20
 opt.foldmethod = 'expr'
@@ -46,6 +49,8 @@ opt.expandtab = true
 if fn.executable('volta') == 1 then
   vim.g.neovim_node_host = fn.trim(fn.system('volta which neovim-node-host'))
 end
+
+vim.g.host_ruby_prog = fn.trim(fn.system('which ruby'))
 
 vim.g.mapleader = ','
 vim.g.maplocalleader = ' '
