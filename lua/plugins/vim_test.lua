@@ -4,11 +4,13 @@ vim.api.nvim_set_keymap('n', '<leader>ts', ':TestSuite<CR>', { noremap = true, s
 vim.api.nvim_set_keymap('n', '<leader>tl', ':TestLast<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>tg', ':TestVisit<CR>', { noremap = true, silent = true })
 
--- vim.g['test#strategy'] = "neovim"
-vim.g['test#strategy'] = "kitty"
+vim.g['test#strategy'] = "neovim"
+vim.g['test#runner_commands'] = {'RSpec'}
+
+-- vim.g['test#strategy'] = "kitty"
 -- vim.g['test#strategy'] = "dispatch"
-vim.g['test#ruby#rspec#executable'] = "../bin/backend/rspec"
-vim.g['test#ruby#rspec#options'] = {
-  -- all = "--format progress --require ~/rspec_quickfix_formatter.rb --format QuickfixFormatter --out .git/quickfix.out",
-  nearest = '--backtrace',
-}
+-- vim.g['test#ruby#rspec#executable'] = "../bin/backend/test"
+-- vim.g['test#ruby#rspec#options'] = {
+--   -- all = "--format progress --require ~/rspec_quickfix_formatter.rb --format QuickfixFormatter --out .git/quickfix.out",
+--   nearest = '--backtrace',
+-- }

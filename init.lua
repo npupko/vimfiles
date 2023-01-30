@@ -3,6 +3,9 @@ local fn = vim.fn
 local api = vim.api
 local M = {}
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 opt.foldenable = false
 opt.visualbell = true
 opt.relativenumber = true
@@ -11,7 +14,7 @@ opt.cursorline = false
 opt.cursorcolumn = false
 opt.number = true
 opt.confirm = true
-opt.hidden = false
+opt.hidden = true
 opt.clipboard:append({"unnamedplus"})
 opt.list = true
 opt.listchars = { tab = '  ', trail = '·', eol = '¬' }
@@ -53,7 +56,7 @@ end
 vim.g.host_ruby_prog = fn.trim(fn.system('which ruby'))
 
 vim.g.mapleader = ','
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = '<space>'
 
 vim.api.nvim_create_user_command('Frt', ':normal gg O# frozen_string_literal: true<CR><ESC>x', {})
 
@@ -165,6 +168,16 @@ function M.addDebuggerToNextLine()
 end
 
 vim.keymap.set('n', '<leader>/', M.addDebuggerToNextLine, { silent = true })
+
+function M.copyStrAndOpen()
+  -- local text = vim.fn.expand('<cword>')
+  -- vim.fn.setreg('+', text)
+  vim.api.nvim_command('normal! yi\'')
+  local text = vim.fn.getreg('+')
+  vim.fn.system('open https://github.com/' .. text)
+end
+
+vim.keymap.set('n', '<leader>op', M.copyStrAndOpen, { silent = true })
 
 function M.copyLinterError()
   local current_line = vim.api.nvim_win_get_cursor(0)[1] - 1

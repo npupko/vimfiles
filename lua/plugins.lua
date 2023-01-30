@@ -20,17 +20,17 @@ local config = {
 return require('packer').startup({function(use)
   use 'wbthomason/packer.nvim'
 
-
   use {
     'kyazdani42/nvim-web-devicons',
     config = function() require("nvim-web-devicons").setup{ default = true } end,
   }
 
-  use 'tjdevries/nlua.nvim'
+  use 'folke/neodev.nvim'
 
   -- -- Languages
   use 'fladson/vim-kitty'
-  use "kchmck/vim-coffee-script"
+  use { "kchmck/vim-coffee-script", ft = "coffee" }
+  use { "terrastruct/d2-vim", ft = "d2" }
 
   -- use {
   --   'leafoftree/vim-svelte-plugin',
@@ -55,12 +55,13 @@ return require('packer').startup({function(use)
   }
 
   -- use { 'leafgarland/typescript-vim', ft = { 'ts', 'svelte', 'js' } }
-  use { 'keith/rspec.vim', ft = { 'rb' } }
+  -- use { 'keith/rspec.vim', ft = { 'rb' } }
   -- use { 'yuezk/vim-js' }
 
   -- Colorschemes
   -- use { 'jacoborus/tender.vim', opt = true }
-  use { "ellisonleao/gruvbox.nvim" }
+  -- use { "ellisonleao/gruvbox.nvim", config = function() require('plugins.gruvbox') end }
+  use { 'ellisonleao/gruvbox.nvim' }
 
   -- Plugins
   use {
@@ -71,15 +72,7 @@ return require('packer').startup({function(use)
     config = function() require('plugins.nvim_tree') end
   }
 
-  -- use { 'neovim/nvim-lspconfig' }
-  -- use {
-  --   'williamboman/nvim-lsp-installer',
-  --   -- config = function() require('plugins.lsp_installer') end
-  -- }
-
-  use { "williamboman/mason.nvim" }
-  use { "williamboman/mason-lspconfig.nvim" }
-  use { "jose-elias-alvarez/null-ls.nvim" }
+  use "nvim-lua/plenary.nvim"
 
   use {
     "neovim/nvim-lspconfig",
@@ -93,19 +86,14 @@ return require('packer').startup({function(use)
     end
   }
 
-  -- use {
-  --   "williamboman/mason.nvim",
-  --   "williamboman/mason-lspconfig.nvim",
-  --   "neovim/nvim-lspconfig",
-  -- }
-
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
     config = function() require('plugins.nvim_treesitter') end
   }
 
-  use { 'nvim-treesitter/nvim-treesitter-textobjects' }
+  -- TODO: Don't use it yet
+  -- use { 'nvim-treesitter/nvim-treesitter-textobjects' }
   use { 'JoosepAlviste/nvim-ts-context-commentstring' }
 
   use {
@@ -113,7 +101,8 @@ return require('packer').startup({function(use)
     config = function() require('plugins.indent_blankline') end
   }
 
-  -- use '/usr/local/opt/fzf'
+  -- use { 'junegunn/fzf', run = function() vim.fn['fzf#install']() end }
+  -- use { 'junegunn/fzf.vim', config = function() require('plugins.fzf-vim') end }
 
   -- use {
   --   'ibhagwan/fzf-lua',
@@ -121,13 +110,16 @@ return require('packer').startup({function(use)
   --   config = function() require('plugins.fzf_lua') end
   -- }
 
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim',
-    },
-    config = function() require('plugins.telescope') end
-  }
+  -- use {
+  --   'nvim-telescope/telescope.nvim',
+  --   requires = {
+  --     'nvim-lua/plenary.nvim',
+  --   },
+  --   config = function() require('plugins.telescope') end
+  -- }
+
+  use { 'junegunn/fzf', run = function() vim.fn['fzf#install']() end }
+  use { 'junegunn/fzf.vim', config = function() require('plugins.fzf-vim') end }
 
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
@@ -193,6 +185,8 @@ return require('packer').startup({function(use)
   --     vim.g.hardtime_ignore_buffer_patterns = { "NvimTree.*", "help.*" }
   --   end
   -- }
+
+  -- use { 'nvim-treesitter/playground' }
 
   -- cmp plugins
   use {

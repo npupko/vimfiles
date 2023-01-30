@@ -23,4 +23,20 @@ vim.g.rails_projections = {
     },
     type = "functional test"
   },
+  ["app/*.rb"] = {
+    alternate = "spec/{}_spec.rb",
+    type = "source"
+  },
+  ["spec/*_spec.rb"] = {
+    alternate = "app/{}.rb",
+    type = "test"
+  },
+  ["app/controllers/*.rb"] = {
+    alternate = "spec/requests/{}_spec.rb",
+    type = "source"
+  },
+  ["spec/requests/*_spec.rb"] = {
+    alternate = "app/{}.rb",
+    type = "test"
+  }
 }

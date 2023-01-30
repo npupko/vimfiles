@@ -1,7 +1,5 @@
 require("mason").setup()
-require("mason-lspconfig").setup({
-  ensure_installed = { "all" },
-})
+require("mason-lspconfig").setup()
 
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
@@ -47,14 +45,16 @@ require'lspconfig'.tsserver.setup{
 require'lspconfig'.ruby_ls.setup{
   on_attach = on_attach,
   flags = lsp_flags,
-  settings = {
-    ["ruby-ls"] = {
-      init_options = {
-        enabledFeatures = { "codeActions", "diagnostics", "documentHighlights", "documentSymbols", "formatting", "inlayHint" }
-      }
-    }
+  init_options = {
+    enabledFeatures = { "codeActions", "diagnostics", "documentHighlights", "documentSymbols", "formatting", "inlayHint" }
   }
 }
+
+-- Solargraph
+-- require'lspconfig'.solargraph.setup{
+--   on_attach = on_attach,
+--   flags = lsp_flags,
+-- }
 
 require'lspconfig'.svelte.setup{
   on_attach = on_attach,
@@ -62,6 +62,26 @@ require'lspconfig'.svelte.setup{
 }
 
 require'lspconfig'.tsserver.setup{
+  on_attach = on_attach,
+  flags = lsp_flags,
+}
+
+require'lspconfig'.tailwindcss.setup{
+  on_attach = on_attach,
+  flags = lsp_flags,
+}
+
+require'lspconfig'.terraformls.setup{
+  on_attach = on_attach,
+  flags = lsp_flags,
+}
+
+require 'lspconfig'.rust_analyzer.setup{
+  on_attach = on_attach,
+  flags = lsp_flags,
+}
+
+require 'lspconfig'.gopls.setup{
   on_attach = on_attach,
   flags = lsp_flags,
 }
