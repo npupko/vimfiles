@@ -1,10 +1,5 @@
-return {
-  'nvim-lualine/lualine.nvim',
-  dependencies = {
-    'kyazdani42/nvim-web-devicons',
-  },
-  opts = {
-    options = {
+require('lualine').setup {
+  options = {
     icons_enabled = true,
     theme = 'gruvbox',
     component_separators = { left = '', right = ''},
@@ -36,6 +31,4 @@ return {
   },
   tabline = {},
   extensions = {}
-
-  }
 }

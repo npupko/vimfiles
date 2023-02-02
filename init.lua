@@ -96,7 +96,7 @@ vim.cmd("let $NVIM_TUI_ENABLE_TRUE_COLOR=1")
 
 -- opt.termguicolors = true
 opt.background = 'dark'
-vim.cmd('colorscheme gruvbox')
+-- vim.cmd('colorscheme gruvbox')
 
 vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>')
 vim.keymap.set('n', '<leader><c-v>', ':e /Users/random/.config/nvim/lua/plugins.lua<CR>')
@@ -190,5 +190,18 @@ vim.keymap.set('n', '<leader>cle', M.copyLinterError, { silent = true })
 vim.g.loaded_sql_completion = 0
 vim.g.omni_sql_no_default_maps = 1
 
-require('plugins')
-require('plugins.lsp')
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup("plugins")
+-- require('plugins.lsp')

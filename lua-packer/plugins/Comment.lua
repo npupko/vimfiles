@@ -1,7 +1,9 @@
-return {
-  'numToStr/Comment.nvim',
-  opts = {
-    pre_hook = function(ctx)
+if not pcall(require, "Comment") then
+  return
+end
+
+require('Comment').setup({
+  pre_hook = function(ctx)
     -- Only calculate commentstring for tsx filetypes
     if vim.bo.filetype == 'svelte' then
       local U = require('Comment.utils')
@@ -23,5 +25,4 @@ return {
       })
     end
   end
-  }
-}
+})
