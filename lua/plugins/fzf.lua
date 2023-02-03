@@ -4,6 +4,7 @@
   -- }
 
 return {
+  enable = false,
   'junegunn/fzf.vim',
   keys = {
     { '<c-P>', ':Files<CR>', desc = 'Find files' },

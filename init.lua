@@ -56,7 +56,7 @@ end
 vim.g.host_ruby_prog = fn.trim(fn.system('which ruby'))
 
 vim.g.mapleader = ','
-vim.g.maplocalleader = '<space>'
+vim.g.maplocalleader = ' '
 
 vim.api.nvim_create_user_command('Frt', ':normal gg O# frozen_string_literal: true<CR><ESC>x', {})
 
