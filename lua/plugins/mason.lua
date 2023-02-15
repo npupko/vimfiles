@@ -13,7 +13,7 @@ return {
     vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
     vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
     vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-    vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
+    vim.keymap.set('n', '<leader>Q', vim.diagnostic.setloclist, opts)
 
     -- Use an on_attach function to only map the following keys
     -- after the language server attaches to the current buffer
@@ -58,12 +58,24 @@ return {
       "jsonls",
     }
 
-    for _, lsp in ipairs(servers) do
-      require'lspconfig'[lsp].setup{
-        on_attach = on_attach,
-        flags = lsp_flags,
-      }
-    end
+    -- for _, lsp in ipairs(servers) do
+    --   require'lspconfig'[lsp].setup{
+    --     on_attach = on_attach,
+    --     flags = lsp_flags,
+    --   }
+    -- end
+
+    require("mason-lspconfig").setup_handlers {
+      -- The first entry (without a key) will be the default handler
+      -- and will be called for each installed server that doesn't have
+      -- a dedicated handler.
+      function (server_name) -- default handler (optional)
+        require("lspconfig")[server_name].setup {
+          on_attach = on_attach,
+          flags = lsp_flags,
+        }
+      end,
+    }
 
     require("null-ls").setup({
       sources = {

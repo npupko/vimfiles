@@ -3,13 +3,13 @@
 
 return {
   'kyazdani42/nvim-tree.lua',
-  enabled = true,
+  enabled = false,
   keys = {
     { '<leader><leader>', '<cmd>NvimTreeToggle<CR>', desc = 'Toggle NvimTree' },
     { '<leader>m', '<cmd>NvimTreeFindFile<CR>', desc = 'Find file in NvimTree' }
   },
   dependencies = {
-    'kyazdani42/nvim-web-devicons', -- optional, for file icon
+    'nvim-tree/nvim-web-devicons', -- optional, for file icon
   },
   opts = {
     renderer = {

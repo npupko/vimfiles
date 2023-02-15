@@ -1,12 +1,13 @@
 return {
   'nvim-lualine/lualine.nvim',
   dependencies = {
-    'kyazdani42/nvim-web-devicons',
+    'nvim-tree/nvim-web-devicons',
   },
   opts = {
     options = {
     icons_enabled = true,
-    theme = 'gruvbox',
+    -- theme = 'gruvbox',
+    theme = 'kanagawa',
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {},

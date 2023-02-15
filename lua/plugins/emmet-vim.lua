@@ -1,1 +1,4 @@
-return { 'mattn/emmet-vim' }
+return {
+  'mattn/emmet-vim',
+  enabled = false
+}

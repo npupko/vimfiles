@@ -82,7 +82,8 @@ return {
         ["<Tab>"] = cmp.mapping(function(fallback)
           vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n', true)
         end),
-        ["<C-d>"] = cmp.mapping.confirm { select = true },
+        -- ["<C-d>"] = cmp.mapping.confirm { select = true },
+        ["<C-y>"] = cmp.mapping.confirm { select = true },
       },
       formatting = formatting,
       sources = cmp.config.sources({

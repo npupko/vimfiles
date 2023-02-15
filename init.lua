@@ -60,13 +60,17 @@ vim.g.maplocalleader = ' '
 
 vim.api.nvim_create_user_command('Frt', ':normal gg O# frozen_string_literal: true<CR><ESC>x', {})
 
-function M.copyCurrentFilenameToClipboard()
+function M.copyCurrentFilenameFromProjectRootToClipboard()
   local filename = fn.expand('%:p')
+  filename = fn.fnamemodify(filename, ':~:.')
+  local projectRoot = fn.system('git rev-parse --show-toplevel')
+  projectRoot = fn.fnamemodify(projectRoot, ':~:.')
+  filename = fn.substitute(filename, projectRoot, '', '')
   vim.fn.setreg('+', filename)
   print('Filename copied to clipboard: ' .. filename)
 end
 
-vim.keymap.set('n', '<leader>cfp', M.copyCurrentFilenameToClipboard)
+vim.keymap.set('n', '<leader>cfp', M.copyCurrentFilenameFromProjectRootToClipboard)
 
 function M.CloseCurrentBuffer()
   local buffers = fn.getbufinfo({buflisted = 1})
@@ -94,8 +98,14 @@ vim.keymap.set('n', '<leader>d', M.DeleteHiddenBuffers, { silent = true })
 
 vim.cmd("let $NVIM_TUI_ENABLE_TRUE_COLOR=1")
 
--- opt.termguicolors = true
+opt.termguicolors = true
 opt.background = 'dark'
+
+-- local has_termguicolors = vim.fn.exists('+termguicolors')
+-- if has_termguicolors then
+--   vim.o.t_8f = "\27[38;2;%lu;%lu;%lum"
+--   vim.o.t_8b = "\27[48;2;%lu;%lu;%lum"
+-- end
 -- vim.cmd('colorscheme gruvbox')
 
 vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>')
@@ -167,7 +177,7 @@ function M.addDebuggerToNextLine()
   end
 end
 
-vim.keymap.set('n', '<leader>/', M.addDebuggerToNextLine, { silent = true })
+vim.keymap.set('n', '<leader>/', M.addDebuggerToNextLine, { silent = true, desc = 'Add debugger to next line' })
 
 function M.copyStrAndOpen()
   -- local text = vim.fn.expand('<cword>')
@@ -177,7 +187,9 @@ function M.copyStrAndOpen()
   vim.fn.system('open https://github.com/' .. text)
 end
 
-vim.keymap.set('n', '<leader>op', M.copyStrAndOpen, { silent = true })
+vim.keymap.set('n', '<leader>op', M.copyStrAndOpen, { silent = true, desc = 'Copy word and open in browser' })
+
+vim.keymap.set('n', '<leader>a', '<CMD>argadd %<CR>', { silent = true, desc = 'Add current file to arglist' })
 
 function M.copyLinterError()
   local current_line = vim.api.nvim_win_get_cursor(0)[1] - 1
@@ -185,10 +197,7 @@ function M.copyLinterError()
   vim.fn.setreg('+', result[1].code)
 end
 
-vim.keymap.set('n', '<leader>cle', M.copyLinterError, { silent = true })
-
-vim.g.loaded_sql_completion = 0
-vim.g.omni_sql_no_default_maps = 1
+vim.keymap.set('n', '<leader>cle', M.copyLinterError, { silent = true, desc = 'Copy linter error' })
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -202,6 +211,36 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
+
+-- hi NeoTreeGitAdded guibg = gruvbox_yellow
+-- hi NeoTreeGitConflict guibg = gruvbox_red
+-- hi NeoTreeGitDeleted guibg = gruvbox_red
+-- hi NeoTreeGitIgnored guibg = gruvbox_grey
+-- hi NeoTreeGitModified guibg = gruvbox_green
+-- hi NeoTreeGitUntracked guibg = gruvbox_green
+-- vim.api.nvim_set_hl(0, 'NeoTreeGitAdded', {bg='#282828'})
+-- vim.api.nvim_set_hl(0, 'NeoTreeGitConflict', {bg='#282828'})
+-- vim.api.nvim_set_hl(0, 'NeoTreeGitDeleted', {bg='#282828'})
+-- vim.api.nvim_set_hl(0, 'NeoTreeGitIgnored', {bg='#282828'})
+-- vim.api.nvim_set_hl(0, 'NeoTreeGitModified', {bg='#282828'})
+-- vim.api.nvim_set_hl(0, 'NeoTreeGitUntracked', {bg='#282828'})
+
+M.is_empty = function(str) return str == nil or str == "" end
+
+-- local get_filename = function(path)
+--     local filename_with_relative_path = vim.fn.substitute(path, vim.fn.getcwd() .. "/", "", "")
+--     local filename = filename_with_relative_path:match("([^/]+)$")
+--
+--     if M.is_empty(filename) then
+--         return " %f"
+--     end
+--
+--     return filename
+-- end
+--
+-- local filename = get_filename(vim.fn.expand("%"))
+-- vim.opt.winbar = " " .. filename .. " %m"
+-- vim.opt_local.winbar = "%f"
 
 require("lazy").setup("plugins")
 -- require('plugins.lsp')
