@@ -1,7 +1,7 @@
 return {
-  "nvim-neo-tree/neo-tree.nvim",
+  'nvim-neo-tree/neo-tree.nvim',
   branch = "v2.x",
-  enabled = true,
+  enabled = false,
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
@@ -45,11 +45,11 @@ return {
       },
     },
     default_component_configs = {
-      icon = {
-        folder_closed = "",
-        folder_open = "",
-        folder_empty = "",
-      },
+      -- icon = {
+      --   -- folder_closed = "",
+      --   -- folder_open = "",
+      --   -- folder_empty = "",
+      -- },
       -- modified = {
       --   symbol = "",
       --   highlight = "NeoTreeModified",

@@ -3,7 +3,7 @@
 
 return {
   'kyazdani42/nvim-tree.lua',
-  enabled = false,
+  enabled = true,
   keys = {
     { '<leader><leader>', '<cmd>NvimTreeToggle<CR>', desc = 'Toggle NvimTree' },
     { '<leader>m', '<cmd>NvimTreeFindFile<CR>', desc = 'Find file in NvimTree' }

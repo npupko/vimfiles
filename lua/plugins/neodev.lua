@@ -1,4 +1,5 @@
 return {
-  "folke/neodev.nvim",
+  enabled = true,
+  'folke/neodev.nvim',
   ft = { "lua" },
 }

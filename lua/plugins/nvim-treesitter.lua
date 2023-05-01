@@ -26,5 +26,6 @@ return {
         enable = true
       },
     }
-  end
+  end,
+  priority = 900,
 }

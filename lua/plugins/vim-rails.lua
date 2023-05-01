@@ -1,6 +1,11 @@
 return {
   'tpope/vim-rails',
   config = function()
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "eruby.yaml",
+      command = "set filetype=yaml",
+    })
+
     vim.g.rails_projections = {
       ["app/services/*.rb"] = {
         command = "service",

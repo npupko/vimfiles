@@ -3,8 +3,8 @@ local fn = vim.fn
 local api = vim.api
 local M = {}
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 
 opt.foldenable = false
 opt.visualbell = true
@@ -23,6 +23,7 @@ opt.path:remove "/usr/include"
 opt.path:append "**"
 opt.undofile = true
 opt.signcolumn = 'yes'
+opt.showtabline = 1
 -- disable mouse
 opt.mouse = ''
 
@@ -93,8 +94,8 @@ function M.DeleteHiddenBuffers()
   print('Hidden buffers deleted')
 end
 
-vim.keymap.set('n', '<leader>q', M.CloseCurrentBuffer, { silent = true })
-vim.keymap.set('n', '<leader>d', M.DeleteHiddenBuffers, { silent = true })
+vim.keymap.set('n', '<leader>q', M.CloseCurrentBuffer, { silent = true, desc = 'Close current buffer' })
+vim.keymap.set('n', '<leader>d', M.DeleteHiddenBuffers, { silent = true, desc = 'Delete hidden buffers' })
 
 vim.cmd("let $NVIM_TUI_ENABLE_TRUE_COLOR=1")
 
@@ -108,16 +109,16 @@ opt.background = 'dark'
 -- end
 -- vim.cmd('colorscheme gruvbox')
 
-vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>')
-vim.keymap.set('n', '<leader><c-v>', ':e /Users/random/.config/nvim/lua/plugins.lua<CR>')
-vim.keymap.set('n', '<leader>V', ':source $MYVIMRC<CR>')
-vim.keymap.set('n', '<leader>un', ':syntax sync fromstart<CR>:redraw!<CR>')
-vim.keymap.set('n', '<leader>fef', ':normal! gg=G``<CR>')
+vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = 'Edit vimrc' })
+vim.keymap.set('n', '<leader><c-v>', ':cd /Users/random/.config/nvim/lua/plugins<CR>', { desc = 'Edit plugins' })
+vim.keymap.set('n', '<leader>V', ':source $MYVIMRC<CR>', { desc = 'Reload vimrc' })
+vim.keymap.set('n', '<leader>un', ':syntax sync fromstart<CR>:redraw!<CR>', { desc = 'Reload syntax' })
+vim.keymap.set('n', '<leader>fef', ':normal! gg=G``<CR>', { desc = 'Format file' })
 
-vim.keymap.set('n', '<C-k>', '<C-w><Up>', { silent = true })
-vim.keymap.set('n', '<C-j>', '<C-w><Down>', { silent = true })
-vim.keymap.set('n', '<C-l>', '<C-w><Right>', { silent = true })
-vim.keymap.set('n', '<C-h>', '<C-w><Left>', { silent = true })
+vim.keymap.set('n', '<C-k>', '<C-w><Up>', { silent = true, desc = 'Move to window above' })
+vim.keymap.set('n', '<C-j>', '<C-w><Down>', { silent = true, desc = 'Move to window below' })
+vim.keymap.set('n', '<C-l>', '<C-w><Right>', { silent = true, desc = 'Move to window right' })
+vim.keymap.set('n', '<C-h>', '<C-w><Left>', { silent = true, desc = 'Move to window left' })
 
 local filetypesMapping = {
   css = '_cs',
@@ -135,29 +136,29 @@ local filetypesMapping = {
 
 for lang, mapping in pairs(filetypesMapping) do
   local command = function() vim.api.nvim_command(string.format('setlocal filetype=%s', lang)) end
-  vim.keymap.set('n', mapping, command, { silent = true })
+  vim.keymap.set('n', mapping, command, { silent = true, desc = 'Set filetype to ' .. lang })
 end
 
-vim.keymap.set('n', '<Up>', ':resize +2<CR>', { silent = true })
-vim.keymap.set('n', '<Down>', ':resize -2<CR>', { silent = true })
-vim.keymap.set('n', '<Left>', ':vertical resize +2<CR>', { silent = true })
-vim.keymap.set('n', '<Right>', ':vertical resize -2<CR>', { silent = true })
+vim.keymap.set('n', '<Up>', ':resize +2<CR>', { silent = true, desc = 'Increase window height' })
+vim.keymap.set('n', '<Down>', ':resize -2<CR>', { silent = true, desc = 'Decrease window height' })
+vim.keymap.set('n', '<Left>', ':vertical resize +2<CR>', { silent = true, desc = 'Increase window width' })
+vim.keymap.set('n', '<Right>', ':vertical resize -2<CR>', { silent = true, desc = 'Decrease window width' })
 
-vim.keymap.set('t', '<C-o>', [[<C-\><C-n>]], { silent = false, noremap = false })
+vim.keymap.set('t', '<C-o>', [[<C-\><C-n>]], { silent = false, noremap = false, desc = 'Exit terminal mode' })
 
-vim.keymap.set('n', 'Q', '@q', { silent = true })
-vim.keymap.set('v', 'Q', ':norm @q<CR>', { silent = true })
+vim.keymap.set('n', 'Q', '@q', { silent = true, desc = 'Execute macro' })
+vim.keymap.set('v', 'Q', ':norm @q<CR>', { silent = true, desc = 'Execute macro' })
 
-vim.keymap.set('v', '//', 'y/<C-R>"<CR>', { silent = true })
-vim.keymap.set('n', '//', ':nohlsearch<CR>', { silent = true })
+vim.keymap.set('v', '//', 'y/<C-R>"<CR>', { silent = true, desc = 'Search for selected text' })
+vim.keymap.set('n', '//', ':nohlsearch<CR>', { silent = true, desc = 'Clear search' })
 -- vim.keymap.set('i', '<C-c>', '<Esc><Esc>', { silent = true })
-vim.keymap.set('i', '<C-c>', '<NOP>', { silent = true })
+vim.keymap.set('i', '<C-c>', '<NOP>', { silent = true, desc = 'Do nothing' })
 
 -- Expand filename for commands like Espec
-vim.keymap.set('c', '<c-e>', [[<C-R>=substitute(expand('%:r'), '^app[^/]*.', '', '')<CR>]])
+vim.keymap.set('c', '<c-e>', [[<C-R>=substitute(expand('%:r'), '^app[^/]*.', '', '')<CR>]], { desc = 'Expand filename' })
 
 -- Open quickfix error in quickfix window
-vim.keymap.set('n', '<localleader>q', [[:cg .git/quickfix.out<CR> :cwindow<CR>]])
+vim.keymap.set('n', '<localleader>q', [[:cg .git/quickfix.out<CR> :cwindow<CR>]], { desc = 'Open quickfix error in quickfix window' })
 
 function M.contains(list, x)
 	for _, v in pairs(list) do
@@ -212,19 +213,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- hi NeoTreeGitAdded guibg = gruvbox_yellow
--- hi NeoTreeGitConflict guibg = gruvbox_red
--- hi NeoTreeGitDeleted guibg = gruvbox_red
--- hi NeoTreeGitIgnored guibg = gruvbox_grey
--- hi NeoTreeGitModified guibg = gruvbox_green
--- hi NeoTreeGitUntracked guibg = gruvbox_green
--- vim.api.nvim_set_hl(0, 'NeoTreeGitAdded', {bg='#282828'})
--- vim.api.nvim_set_hl(0, 'NeoTreeGitConflict', {bg='#282828'})
--- vim.api.nvim_set_hl(0, 'NeoTreeGitDeleted', {bg='#282828'})
--- vim.api.nvim_set_hl(0, 'NeoTreeGitIgnored', {bg='#282828'})
--- vim.api.nvim_set_hl(0, 'NeoTreeGitModified', {bg='#282828'})
--- vim.api.nvim_set_hl(0, 'NeoTreeGitUntracked', {bg='#282828'})
-
 M.is_empty = function(str) return str == nil or str == "" end
 
 -- local get_filename = function(path)
@@ -243,4 +231,3 @@ M.is_empty = function(str) return str == nil or str == "" end
 -- vim.opt_local.winbar = "%f"
 
 require("lazy").setup("plugins")
--- require('plugins.lsp')
