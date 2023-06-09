@@ -26,6 +26,8 @@ return {
         template = {
           "# frozen_string_literal: true",
           "",
+          "require \"rails_helper\"",
+          "",
           "RSpec.describe {camelcase|capitalize|colons}, type: :service do",
           "end"
         },

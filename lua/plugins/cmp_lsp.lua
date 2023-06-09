@@ -1,30 +1,29 @@
 local icons = {
   Text = " ",
-  Method = " ",
-  Function = " ",
+  Method = "󰆧 ",
+  Function = "󰊕",
   Constructor = " ",
   Field = " ",
-  Variable = " ",
-  Class = "ﴯ ",
+  Variable = "󰈜 ",
+  Class = "󰠱 ",
   Interface = " ",
-  Module = " ",
-  Property = "ﰠ ",
-  Unit = "塞 ",
-  Value = " ",
+  Module = "󰏓 ",
+  Property = "󰜢 ",
+  Unit = "󰑭",
+  Value = "󰎠 ",
   Enum = " ",
-  Keyword = " ",
-  -- Keyword = "廓 ",
-  Snippet = " ",
-  Color = " ",
-  File = " ",
-  Reference = " ",
+  Keyword = "󰌋",
+  Snippet = "󰅱",
+  Color = "󰏘",
+  File = "󰈙",
+  Reference = "󰈇",
   Folder = " ",
   EnumMember = " ",
-  Constant = " ",
-  Struct = "פּ ",
+  Constant = "󰐀",
+  Struct = "󰙅",
   Event = " ",
-  Operator = " ",
-  TypeParameter = " ",
+  Operator = "󰆕",
+  TypeParameter = "󰊄",
 }
 
 local formatting = {
@@ -74,8 +73,7 @@ return {
         ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
         ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
         ["<m-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-        ["<C-y>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }), -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-        ["<C-e>"] = cmp.mapping {
+        ["<C-y>"] = cmp.mapping {
           i = cmp.mapping.abort(),
           c = cmp.mapping.close(),
         },
@@ -83,7 +81,8 @@ return {
           vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n', true)
         end),
         -- ["<C-d>"] = cmp.mapping.confirm { select = true },
-        ["<C-y>"] = cmp.mapping.confirm { select = true },
+        -- ["<C-y>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }), -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+        ["<C-e>"] = cmp.mapping.confirm { select = true },
       },
       formatting = formatting,
       sources = cmp.config.sources({

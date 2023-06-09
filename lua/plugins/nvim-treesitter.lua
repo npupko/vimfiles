@@ -6,8 +6,8 @@ return {
   },
   config = function()
     require'nvim-treesitter.configs'.setup {
-      ensure_installed = "all",
-      ignore_install = { "t32" },
+      ensure_installed = { "ruby", "rust", "tsx", "typescript", "svelte", "javascript" },
+      auto_install = true,
       sync_install = false,
       highlight = {
         enable = true,

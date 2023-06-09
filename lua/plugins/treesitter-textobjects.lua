@@ -1,12 +1,21 @@
 return {
   'nvim-treesitter/nvim-treesitter-textobjects',
-  enabled = false,
+  enabled = true,
   dependencies = {
     "nvim-treesitter/nvim-treesitter",
   },
   config = function ()
     require'nvim-treesitter.configs'.setup {
       textobjects = {
+        lsp_interop = {
+          enable = true,
+          border = 'none',
+          floating_preview_opts = {},
+          peek_definition_code = {
+            ["<leader>df"] = "@function.outer",
+            ["<leader>dF"] = "@class.outer",
+          },
+        },
         select = {
           enable = true,
 
@@ -15,13 +24,12 @@ return {
 
           keymaps = {
             -- You can use the capture groups defined in textobjects.scm
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            ["ac"] = "@class.outer",
-            -- You can optionally set descriptions to the mappings (used in the desc parameter of
-            -- nvim_buf_set_keymap) which plugins like which-key display
+            ["af"] = { query = "@function.outer", desc = "Select outer part of a function region" },
+            ["am"] = { query = "@function.outer", desc = "Select outer part of a method region" },
+            ["if"] = { query = "@function.inner", desc = "Select inner part of a function region" },
+            ["im"] = { query = "@function.inner", desc = "Select inner part of a method region" },
+            ["ac"] = { query = "@class.outer", desc = "Select outer part of a class region" },
             ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-            -- You can also use captures from other query groups like `locals.scm`
             ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
           },
           -- You can choose the select mode (default is charwise 'v')

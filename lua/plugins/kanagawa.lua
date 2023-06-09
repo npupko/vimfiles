@@ -23,6 +23,6 @@ return {
       theme = "lotus"
     })
     -- vim.cmd([[colorscheme kanagawa]])
-    require("kanagawa").load("dragon")
+    require("kanagawa").load("wave")
   end
 }

@@ -1,4 +1,4 @@
 return {
   'AndrewRadev/splitjoin.vim',
-  enabled = true,
+  enabled = false,
 }
