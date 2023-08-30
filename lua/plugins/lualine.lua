@@ -62,6 +62,7 @@ return {
     --   lualine_y = {},
     --   lualine_z = {}
     -- },
-    extensions = {'fugitive', 'neo-tree', 'quickfix'}
+    -- extensions = {'fugitive', 'neo-tree', 'quickfix'}
+    extensions = {'fugitive', 'nvim-tree', 'quickfix'}
   }
 }

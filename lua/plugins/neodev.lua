@@ -1,5 +1,7 @@
 return {
   enabled = true,
   'folke/neodev.nvim',
-  ft = { "lua" },
+  opts = {},
+  -- ft = { "lua" },
+  priority = 400,
 }

@@ -3,15 +3,18 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
-    "jose-elias-alvarez/null-ls.nvim"
+    "jose-elias-alvarez/null-ls.nvim",
+    "folke/neodev.nvim"
   },
 
   build = ":MasonUpdate",
+  priority = 500,
   config = function()
+    require("neodev").setup({})
     require("mason").setup()
     require("mason-lspconfig").setup()
     local keymap = vim.keymap.set
-    local is_saga_installed = pcall(require, 'lspsaga')
+    local is_saga_installed = pcall(require, 'lspsaga') and false
     local opts = { noremap=true, silent=true }
 
     keymap('n', '<leader>Q', vim.diagnostic.setloclist, opts)
@@ -19,11 +22,11 @@ return {
     if is_saga_installed then
       keymap("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
       keymap("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>")
-    keymap("n", "<leader>e", "<cmd>Lspsaga show_line_diagnostics<CR>")
+      keymap("n", "<leader>e", "<cmd>Lspsaga show_line_diagnostics<CR>")
     else
       keymap('n', '[d', vim.diagnostic.goto_prev, opts)
       keymap('n', ']d', vim.diagnostic.goto_next, opts)
-    keymap('n', '<leader>e', vim.diagnostic.open_float, opts)
+      keymap('n', '<leader>e', vim.diagnostic.open_float, opts)
     end
 
     -- Use an on_attach function to only map the following keys
@@ -38,7 +41,7 @@ return {
 
       keymap('n', 'gD', vim.lsp.buf.declaration, bufopts('Go to declaration'))
       keymap('n', 'gi', vim.lsp.buf.implementation, bufopts('Go to implementation'))
-      keymap('n', 'gy', vim.lsp.buf.type_definition, bufopts('Go to type definition'))
+      keymap('n', 'gt', vim.lsp.buf.type_definition, bufopts('Go to type definition'))
       keymap('n', 'gr', vim.lsp.buf.references, bufopts('Find references'))
       keymap('n', '<leader>k', vim.lsp.buf.signature_help, bufopts('Show signature help'))
       keymap('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts('Add workspace folder'))
@@ -105,7 +108,7 @@ return {
     }
 
     -- local null_ls = require("null-ls")
-    --
+
     -- null_ls.setup({
     --   sources = {
     --     null_ls.builtins.diagnostics.rubocop.with({

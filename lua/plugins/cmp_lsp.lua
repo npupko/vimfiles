@@ -58,7 +58,7 @@ return {
       return
     end
 
-    cmp.setup {
+    cmp.setup({
       snippet = {
         expand = function(args)
           luasnip.lsp_expand(args.body) -- For `luasnip` users.
@@ -100,6 +100,6 @@ return {
         ghost_text = false,
         native_menu = false,
       },
-    }
+    })
   end,
 }

@@ -49,6 +49,13 @@ opt.softtabstop = 2
 opt.tabstop = 2
 opt.expandtab = true
 
+-- vim.cmd([[
+-- set langmap='ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ, фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz'
+-- ]])
+vim.g.langmap = 'ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ, фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz'
+-- opt.keymap='russian-jcukenwin'
+
+
 -- Nodejs host
 if fn.executable('volta') == 1 then
   vim.g.neovim_node_host = fn.trim(fn.system('volta which neovim-node-host'))
@@ -59,7 +66,17 @@ vim.g.host_ruby_prog = fn.trim(fn.system('which ruby'))
 vim.g.mapleader = ','
 vim.g.maplocalleader = ' '
 
-vim.api.nvim_create_user_command('Frt', ':normal gg O# frozen_string_literal: true<CR><ESC>x', {})
+-- function M.prependFileWithMagicComment()
+--   local line = '# frozen_string_literal: true'
+--   local currentLine = fn.getline(1)
+--   if currentLine ~= line then
+--     api.nvim_command("1s/^/" .. line .. "\r\r")
+--     api.nvim_command("noh")
+--   end
+--
+-- end
+--
+-- vim.api.nvim_create_user_command('Frt', M.prependFileWithMagicComment, { desc = 'Add magic comment line to file' })
 
 function M.copyCurrentFilenameFromProjectRootToClipboard()
   local filename = fn.expand('%:p')
@@ -114,11 +131,15 @@ vim.keymap.set('n', '<leader><c-v>', ':cd /Users/random/.config/nvim/lua/plugins
 vim.keymap.set('n', '<leader>V', ':source $MYVIMRC<CR>', { desc = 'Reload vimrc' })
 vim.keymap.set('n', '<leader>un', ':syntax sync fromstart<CR>:redraw!<CR>', { desc = 'Reload syntax' })
 vim.keymap.set('n', '<leader>fef', ':normal! gg=G``<CR>', { desc = 'Format file' })
+vim.keymap.set('n', '<leader>g', function() vim.cmd("G") end, { desc = 'Git status' })
 
 vim.keymap.set('n', '<C-k>', '<C-w><Up>', { silent = true, desc = 'Move to window above' })
 vim.keymap.set('n', '<C-j>', '<C-w><Down>', { silent = true, desc = 'Move to window below' })
 vim.keymap.set('n', '<C-l>', '<C-w><Right>', { silent = true, desc = 'Move to window right' })
 vim.keymap.set('n', '<C-h>', '<C-w><Left>', { silent = true, desc = 'Move to window left' })
+
+-- disable Shift+K in visual mode
+vim.keymap.set('v', 'K', '<Nop>', { silent = true })
 
 local filetypesMapping = {
   css = '_cs',
@@ -160,25 +181,25 @@ vim.keymap.set('c', '<c-e>', [[<C-R>=substitute(expand('%:r'), '^app[^/]*.', '',
 -- Open quickfix error in quickfix window
 vim.keymap.set('n', '<localleader>q', [[:cg .git/quickfix.out<CR> :cwindow<CR>]], { desc = 'Open quickfix error in quickfix window' })
 
-function M.contains(list, x)
-	for _, v in pairs(list) do
-		if v == x then return true end
-	end
-	return false
-end
-
-function M.addDebuggerToNextLine()
-  local filetype = vim.bo.filetype
-  if filetype == 'lua' then
-    vim.api.nvim_command('normal obinding.pry')
-  elseif M.contains({'svelte', 'js', 'ts'}, filetype) then
-    vim.api.nvim_command('normal odebugger')
-  else
-    vim.api.nvim_command('normal obinding.pry')
-  end
-end
-
-vim.keymap.set('n', '<leader>/', M.addDebuggerToNextLine, { silent = true, desc = 'Add debugger to next line' })
+-- -- replaced with buddy.nvim plugin
+-- function M.contains(list, x)
+-- 	for _, v in pairs(list) do
+-- 		if v == x then return true end
+-- 	end
+-- 	return false
+-- end
+-- function M.addDebuggerToNextLine()
+--   local filetype = vim.bo.filetype
+--   if filetype == 'lua' then
+--     vim.api.nvim_command('normal obinding.pry')
+--   elseif M.contains({'svelte', 'js', 'ts'}, filetype) then
+--     vim.api.nvim_command('normal odebugger')
+--   else
+--     vim.api.nvim_command('normal obinding.pry')
+--   end
+-- end
+--
+-- vim.keymap.set('n', '<leader>/', M.addDebuggerToNextLine, { silent = true, desc = 'Add debugger to next line' })
 
 function M.copyStrAndOpen()
   -- local text = vim.fn.expand('<cword>')
@@ -190,15 +211,18 @@ end
 
 vim.keymap.set('n', '<leader>op', M.copyStrAndOpen, { silent = true, desc = 'Copy word and open in browser' })
 
-vim.keymap.set('n', '<leader>a', '<CMD>argadd %<CR>', { silent = true, desc = 'Add current file to arglist' })
+vim.keymap.set('n', '<leader>A', '<CMD>argadd %<CR>', { silent = false, desc = 'Add current file to arglist' })
 
-function M.copyLinterError()
-  local current_line = vim.api.nvim_win_get_cursor(0)[1] - 1
-  local result = vim.diagnostic.get(fn.bufnr('%'), { lnum = current_line })
-  vim.fn.setreg('+', result[1].code)
-end
+-- function M.copyLinterError()
+--   local current_line = vim.api.nvim_win_get_cursor(0)[1] - 1
+--   local result = vim.diagnostic.get(fn.bufnr('%'), { lnum = current_line })
+--   vim.fn.setreg('+', result[1].code)
+-- end
+--
+-- vim.keymap.set('n', '<leader>cle', M.copyLinterError, { silent = true, desc = 'Copy linter error' })
 
-vim.keymap.set('n', '<leader>cle', M.copyLinterError, { silent = true, desc = 'Copy linter error' })
+-- inoremap <C-c> <Esc>
+vim.keymap.set('i', '<C-c>', '<Esc>', { silent = true, desc = 'Exit insert mode' })
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -213,21 +237,26 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-M.is_empty = function(str) return str == nil or str == "" end
+require("lazy").setup("plugins", {
+  install = { colorscheme = { "gruvbox", "habamax" } },
+  change_detection = {
+    enabled = true,
+    notify = false,
+  },
+  dev = {
+    path = "~/Projects/npupko"
+  },
+  checker = { enabled = false },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+  },
+})
 
--- local get_filename = function(path)
---     local filename_with_relative_path = vim.fn.substitute(path, vim.fn.getcwd() .. "/", "", "")
---     local filename = filename_with_relative_path:match("([^/]+)$")
---
---     if M.is_empty(filename) then
---         return " %f"
---     end
---
---     return filename
--- end
---
--- local filename = get_filename(vim.fn.expand("%"))
--- vim.opt.winbar = " " .. filename .. " %m"
--- vim.opt_local.winbar = "%f"
-
-require("lazy").setup("plugins")

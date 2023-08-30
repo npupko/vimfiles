@@ -46,7 +46,7 @@ return {
         type = "source"
       },
       ["spec/requests/*_spec.rb"] = {
-        alternate = "app/{}.rb",
+        alternate = "app/controllers/{}.rb",
         type = "test"
       }
     }
