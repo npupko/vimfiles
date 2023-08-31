@@ -1,5 +1,6 @@
 return {
   "neovim/nvim-lspconfig",
+  enabled = true,
   dependencies = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
@@ -41,7 +42,7 @@ return {
 
       keymap('n', 'gD', vim.lsp.buf.declaration, bufopts('Go to declaration'))
       keymap('n', 'gi', vim.lsp.buf.implementation, bufopts('Go to implementation'))
-      keymap('n', 'gt', vim.lsp.buf.type_definition, bufopts('Go to type definition'))
+      keymap('n', 'gy', vim.lsp.buf.type_definition, bufopts('Go to type definition'))
       keymap('n', 'gr', vim.lsp.buf.references, bufopts('Find references'))
       keymap('n', '<leader>k', vim.lsp.buf.signature_help, bufopts('Show signature help'))
       keymap('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts('Add workspace folder'))

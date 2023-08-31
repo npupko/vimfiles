@@ -4,7 +4,7 @@ return {
   opts = {
     filetype_exclude = {'NvimTree', 'help', 'packer'},
     use_treesitter = true,
-    show_current_context = true,
+    show_current_context = false,
   },
   priority = 70,
 }
