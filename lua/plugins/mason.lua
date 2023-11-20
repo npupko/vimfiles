@@ -4,7 +4,6 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
-    "jose-elias-alvarez/null-ls.nvim",
     "folke/neodev.nvim"
   },
 
@@ -108,18 +107,6 @@ return {
       end,
     }
 
-    -- local null_ls = require("null-ls")
-
-    -- null_ls.setup({
-    --   sources = {
-    --     null_ls.builtins.diagnostics.rubocop.with({
-    --       command = "bundle",
-    --       prefer_local = "bin",
-    --       args = vim.list_extend({ "exec", "rubocop" }, null_ls.builtins.diagnostics.rubocop._opts.args),
-    --     }),
-    --   },
-    -- })
-
     -- vim.diagnostic.config({
     --   virtual_text = false,
     --   signs = true,
@@ -146,7 +133,7 @@ return {
         --   local link_to_code = base_url .. code
         --   return " [" .. diagnostic.code .. "]" .. link_to_code
         -- end,
-        focusable = false,
+        focusable = true,
       },
       update_in_insert = false,
       severity_sort = false,

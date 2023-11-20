@@ -32,7 +32,6 @@ return {
     },
     view = {
       width = 50,
-      hide_root_folder = false,
     },
   }
 }

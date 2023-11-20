@@ -1,10 +1,18 @@
 return {
   'lukas-reineke/indent-blankline.nvim',
+  main = 'ibl',
   enabled = true,
   opts = {
-    filetype_exclude = {'NvimTree', 'help', 'packer'},
-    use_treesitter = true,
-    show_current_context = false,
+    exclude = {
+      filetypes = {
+        'packer',
+        'NvimTree',
+      },
+    },
+    scope = {
+      show_start = false,
+      show_end = false
+    }
   },
   priority = 70,
 }

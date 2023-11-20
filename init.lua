@@ -26,6 +26,7 @@ opt.signcolumn = 'yes'
 opt.showtabline = 1
 -- disable mouse
 opt.mouse = ''
+opt.laststatus = 2
 
 
 opt.foldlevel = 20
@@ -42,7 +43,7 @@ opt.backup = false
 
 -- Indentation
 opt.autoindent = true
-opt.smartindent = true
+opt.smartindent = false
 opt.smarttab = true
 opt.shiftwidth = 2
 opt.softtabstop = 2
@@ -57,9 +58,9 @@ vim.g.langmap = 'ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJ
 
 
 -- Nodejs host
-if fn.executable('volta') == 1 then
-  vim.g.neovim_node_host = fn.trim(fn.system('volta which neovim-node-host'))
-end
+-- if fn.executable('volta') == 1 then
+--   vim.g.neovim_node_host = fn.trim(fn.system('volta which neovim-node-host'))
+-- end
 
 vim.g.host_ruby_prog = fn.trim(fn.system('which ruby'))
 
@@ -223,6 +224,8 @@ vim.keymap.set('n', '<leader>A', '<CMD>argadd %<CR>', { silent = false, desc = '
 
 -- inoremap <C-c> <Esc>
 vim.keymap.set('i', '<C-c>', '<Esc>', { silent = true, desc = 'Exit insert mode' })
+
+vim.g.db = "postgresql://postgres:password@localhost/yipit_development"
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
