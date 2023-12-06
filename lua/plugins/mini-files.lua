@@ -1,7 +1,7 @@
 return {
   'echasnovski/mini.files',
   version = false,
-  enabled = true,
+  enabled = false,
   -- keys = {
   --   { '-', require('mini.files').open, desc = 'Open root directory with mini.files' },
   --   { '<leader>M',

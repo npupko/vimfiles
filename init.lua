@@ -28,6 +28,9 @@ opt.showtabline = 1
 opt.mouse = ''
 opt.laststatus = 2
 
+-- Need to make Oil work properly
+opt.splitright = true
+-- opt.splitbelow = true
 
 opt.foldlevel = 20
 opt.foldmethod = 'expr'

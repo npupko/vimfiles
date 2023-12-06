@@ -48,7 +48,32 @@ return {
       ["spec/requests/*_spec.rb"] = {
         alternate = "app/controllers/{}.rb",
         type = "test"
-      }
+      },
+      -- GraphQL
+      ["app/graphql/types/*.rb"] = {
+        alternate = "spec/graphql/types/{}_spec.rb",
+        type = "source"
+      },
+      ["spec/graphql/types/*_spec.rb"] = {
+        alternate = "app/graphql/types/{}.rb",
+        type = "test"
+      },
+      ["app/graphql/mutations/*.rb"] = {
+        alternate = "spec/graphql/mutations/{}_spec.rb",
+        type = "source"
+      },
+      ["spec/graphql/mutations/*_spec.rb"] = {
+        alternate = "app/graphql/mutations/{}.rb",
+        type = "test"
+      },
+      ["app/graphql/*.rb"] = {
+        alternate = "spec/graphql/{}_spec.rb",
+        type = "source"
+      },
+      ["spec/graphql/*_spec.rb"] = {
+        alternate = "app/graphql/{}.rb",
+        type = "test"
+      },
     }
   end,
 }

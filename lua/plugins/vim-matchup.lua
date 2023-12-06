@@ -1,3 +1,5 @@
+vim.g.matchup_matchparen_offscreen = { method = 'popup' }
+
 return {
   'andymass/vim-matchup',
   enabled = true,

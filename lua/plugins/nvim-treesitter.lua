@@ -6,6 +6,8 @@ return {
   },
   config = function()
     require'nvim-treesitter.configs'.setup {
+      modules = { "context_commentstring" },
+      ignore_install = { },
       -- ensure_installed = {
       --   "ruby",
       --   "rust",

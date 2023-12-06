@@ -1,6 +1,6 @@
 return {
   "vim-ruby/vim-ruby",
-  enabled = true,
+  enabled = false,
   ft = { "ruby", "erb", "rake", "rspec" },
 
   config = function()
