@@ -1,4 +1,5 @@
 return {
+  event = "VeryLazy",
   'nvim-telescope/telescope.nvim',
   -- commit = '80eefd8ff00145ef6ca4b7c64ef355b224f6e630',
   enabled = true,

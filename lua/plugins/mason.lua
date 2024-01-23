@@ -1,4 +1,5 @@
 return {
+  event = "VeryLazy",
   "neovim/nvim-lspconfig",
   enabled = true,
   dependencies = {

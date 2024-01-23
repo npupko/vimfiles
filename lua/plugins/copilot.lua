@@ -1,4 +1,5 @@
 return {
+  event = "VeryLazy",
   'github/copilot.vim',
   enabled = true,
   config = function()

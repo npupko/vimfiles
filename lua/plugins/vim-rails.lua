@@ -1,4 +1,5 @@
 return {
+  event = "VeryLazy",
   'tpope/vim-rails',
   config = function()
     vim.api.nvim_create_autocmd("FileType", {

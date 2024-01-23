@@ -1,1 +1,4 @@
-return { 'tpope/vim-endwise' }
+return {
+  event = "VeryLazy",
+  'tpope/vim-endwise',
+}

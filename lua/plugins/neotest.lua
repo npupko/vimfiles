@@ -1,4 +1,5 @@
 return {
+  event = "VeryLazy",
   "nvim-neotest/neotest",
   lazy = true,
   enabled = false,

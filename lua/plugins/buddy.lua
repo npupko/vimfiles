@@ -1,4 +1,5 @@
 return {
+  event = "VeryLazy",
   "npupko/buddy.nvim",
   config = function ()
     local buddy = require('buddy')

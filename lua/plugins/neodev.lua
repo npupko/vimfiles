@@ -1,4 +1,5 @@
 return {
+  event = "VeryLazy",
   enabled = true,
   'folke/neodev.nvim',
   opts = {},

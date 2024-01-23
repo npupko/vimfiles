@@ -27,6 +27,13 @@ opt.showtabline = 1
 -- disable mouse
 opt.mouse = ''
 opt.laststatus = 2
+local lint_progress = function()
+  local linters = require("lint").get_running()
+  if #linters == 0 then
+      return "󰦕"
+  end
+  return "󱉶 " .. table.concat(linters, ", ")
+end
 
 -- Need to make Oil work properly
 opt.splitright = true
@@ -133,7 +140,7 @@ opt.background = 'dark'
 vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = 'Edit vimrc' })
 vim.keymap.set('n', '<leader><c-v>', ':cd /Users/random/.config/nvim/lua/plugins<CR>', { desc = 'Edit plugins' })
 vim.keymap.set('n', '<leader>V', ':source $MYVIMRC<CR>', { desc = 'Reload vimrc' })
-vim.keymap.set('n', '<leader>un', ':syntax sync fromstart<CR>:redraw!<CR>', { desc = 'Reload syntax' })
+vim.keymap.set('n', '<leader>rs', ':syntax sync fromstart<CR>:redraw!<CR>', { desc = 'Reload syntax' })
 vim.keymap.set('n', '<leader>fef', ':normal! gg=G``<CR>', { desc = 'Format file' })
 vim.keymap.set('n', '<leader>g', function() vim.cmd("G") end, { desc = 'Git status' })
 
@@ -265,4 +272,3 @@ require("lazy").setup("plugins", {
     },
   },
 })
-

@@ -1,11 +1,14 @@
 return {
   'stevearc/oil.nvim',
   enabled = true,
-  commit = '636989b603fb95032efa9d3e1b3323c8bb533e91',
+  -- commit = '636989b603fb95032efa9d3e1b3323c8bb533e91',
   keys = {
     { '-', function() require('oil').open() end, desc = 'Open parent directory' },
   },
   opts = {
+    keymaps = {
+      ['q'] = "actions.close",
+    },
     default_file_explorer = false,
     split = "botright",
     -- view_options = {

@@ -12,5 +12,6 @@ vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search(
 })
 
 return {
+  event = "VeryLazy",
   'nvim-pack/nvim-spectre',
 }

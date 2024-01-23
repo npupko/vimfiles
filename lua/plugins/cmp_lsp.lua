@@ -37,16 +37,19 @@ local formatting = {
 }
 
 return {
+  event = "VeryLazy",
   "hrsh7th/nvim-cmp",
   enabled = true,
   dependencies = {
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
-    "saadparwaiz1/cmp_luasnip",
     "hrsh7th/cmp-nvim-lsp",
-    "L3MON4D3/LuaSnip",
-    "rafamadriz/friendly-snippets"
+    -- "saadparwaiz1/cmp_luasnip",
+    -- "L3MON4D3/LuaSnip",
+    "rafamadriz/friendly-snippets",
+    'hrsh7th/cmp-vsnip',
+    'hrsh7th/vim-vsnip'
   },
   config = function()
     local cmp_status_ok, cmp = pcall(require, "cmp")
@@ -54,15 +57,16 @@ return {
       return
     end
 
-    local snip_status_ok, luasnip = pcall(require, "luasnip")
-    if not snip_status_ok then
-      return
-    end
+    -- local snip_status_ok, luasnip = pcall(require, "luasnip")
+    -- if not snip_status_ok then
+    --   return
+    -- end
 
     cmp.setup({
       snippet = {
         expand = function(args)
-          luasnip.lsp_expand(args.body) -- For `luasnip` users.
+          vim.fn["vsnip#anonymous"](args.body)
+          -- luasnip.lsp_expand(args.body) -- For `luasnip` users.
         end,
       },
       preselect = cmp.PreselectMode.None,
@@ -89,7 +93,8 @@ return {
       sources = cmp.config.sources({
         { name = 'cmp_tabnine' },
         { name = 'nvim_lsp' },
-        { name = 'luasnip' },
+        -- { name = 'luasnip' },
+        { name = 'vsnip' },
         { name = 'buffer' },
         { name = 'path' },
       }),

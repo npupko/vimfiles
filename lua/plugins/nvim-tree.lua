@@ -2,6 +2,7 @@
 -- vim.api.nvim_set_keymap('n', '<leader>m', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
 
 return {
+  event = "VeryLazy",
   'kyazdani42/nvim-tree.lua',
   enabled = true,
   keys = {
