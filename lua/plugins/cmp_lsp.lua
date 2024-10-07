@@ -91,7 +91,7 @@ return {
       },
       formatting = formatting,
       sources = cmp.config.sources({
-        { name = 'cmp_tabnine' },
+        -- { name = 'cmp_tabnine' },
         { name = 'nvim_lsp' },
         -- { name = 'luasnip' },
         { name = 'vsnip' },
@@ -104,8 +104,10 @@ return {
       },
       experimental = {
         ghost_text = false,
-        native_menu = false,
       },
+      -- view = {
+      --   entries = "native"
+      -- }
     })
   end,
 }

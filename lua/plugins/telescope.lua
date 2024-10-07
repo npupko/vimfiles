@@ -12,7 +12,7 @@ return {
     local M = {}
 
     vim.keymap.set('n', '<c-P>', T.find_files, {desc = 'Open file picker'})
-    vim.keymap.set('n', '<c-\\>', function () T.buffers { sort_mru = true } end, {desc = 'Open buffer picker'})
+    vim.keymap.set('n', '<c-_>', function () T.buffers { sort_mru = true } end, {desc = 'Open buffer picker'})
     vim.keymap.set('n', '<localleader>o', T.oldfiles, {desc = 'Open old files picker'})
     vim.keymap.set('n', '<leader>p', T.live_grep, {desc = 'Open grep picker'})
     vim.keymap.set('n', '<localleader>m', T.keymaps, {desc = 'Open keymaps picker'})

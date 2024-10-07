@@ -12,8 +12,6 @@ return {
         enable = true
       },
     }
-    -- vim.cmd("highlight! link MatchParen GruvboxPurpleSign")
-    -- vim.cmd("highlight! link MatchWord GruvboxOrangeBold")
   end,
   priority = 10001,
 }

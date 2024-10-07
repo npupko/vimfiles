@@ -4,7 +4,7 @@
 return {
   'ellisonleao/gruvbox.nvim',
   -- commit = "73f009df5ed929a853244c413bb52c1d02c117ce",
-  enabled = true,
+  enabled = false,
   init = function()
     vim.cmd.colorscheme('gruvbox')
     -- vim.api.nvim_set_hl(0, 'NeoTreeGitAdded', {ctermbg='none'})

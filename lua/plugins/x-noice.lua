@@ -4,7 +4,16 @@ return {
   event = "VeryLazy",
   enabled = false,
   opts = {
-    -- add any options here
+    cmdline = { enabled = false },
+    messages = { enabled = false },
+    popupmenu = { enabled = false },
+    notify = { enabled = false },
+    lsp = {
+      progress = { enabled = true },
+      hover = { enabled = true },
+      signature = { enabled = true },
+      message = { enabled = true },
+    },
   },
   dependencies = {
     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries

@@ -1,5 +1,5 @@
 return {
-  'sainnhe/gruvbox-material',
+  "sainnhe/gruvbox-material",
   enabled = false,
   init = function()
     vim.g.gruvbox_material_background = 'medium'

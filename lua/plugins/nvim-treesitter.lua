@@ -17,7 +17,7 @@ return {
       --   "vim",
       --   "vimdoc",
       -- },
-      ensure_installed = "all",
+      -- ensure_installed = "all",
       auto_install = true,
       sync_install = false,
       highlight = {

@@ -27,13 +27,6 @@ opt.showtabline = 1
 -- disable mouse
 opt.mouse = ''
 opt.laststatus = 2
-local lint_progress = function()
-  local linters = require("lint").get_running()
-  if #linters == 0 then
-      return "󰦕"
-  end
-  return "󱉶 " .. table.concat(linters, ", ")
-end
 
 -- Need to make Oil work properly
 opt.splitright = true
@@ -59,6 +52,9 @@ opt.shiftwidth = 2
 opt.softtabstop = 2
 opt.tabstop = 2
 opt.expandtab = true
+
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_perl_provider = 0
 
 -- vim.cmd([[
 -- set langmap='ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ, фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz'
@@ -181,8 +177,8 @@ vim.keymap.set('t', '<C-o>', [[<C-\><C-n>]], { silent = false, noremap = false, 
 vim.keymap.set('n', 'Q', '@q', { silent = true, desc = 'Execute macro' })
 vim.keymap.set('v', 'Q', ':norm @q<CR>', { silent = true, desc = 'Execute macro' })
 
-vim.keymap.set('v', '//', 'y/<C-R>"<CR>', { silent = true, desc = 'Search for selected text' })
-vim.keymap.set('n', '//', ':nohlsearch<CR>', { silent = true, desc = 'Clear search' })
+vim.keymap.set('v', '<localleader>/', 'y/<C-R>"<CR>', { silent = true, desc = 'Search for selected text' })
+vim.keymap.set('n', '<localleader>/', ':nohlsearch<CR>', { silent = true, desc = 'Clear search' })
 -- vim.keymap.set('i', '<C-c>', '<Esc><Esc>', { silent = true })
 vim.keymap.set('i', '<C-c>', '<NOP>', { silent = true, desc = 'Do nothing' })
 
@@ -235,7 +231,44 @@ vim.keymap.set('n', '<leader>A', '<CMD>argadd %<CR>', { silent = false, desc = '
 -- inoremap <C-c> <Esc>
 vim.keymap.set('i', '<C-c>', '<Esc>', { silent = true, desc = 'Exit insert mode' })
 
-vim.g.db = "postgresql://postgres:password@localhost/yipit_development"
+-- Function to insert issue ID into commit message
+local function insert_issue_id()
+  -- Get current buffer contents
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+
+  -- Find the line with the branch name
+  local branch_name_line = ""
+  for _, line in ipairs(lines) do
+    if line:match("^# On branch ") then
+      branch_name_line = line
+      break
+    end
+  end
+
+  -- Extract the issue ID from the branch name
+  local issue_id = branch_name_line:match("%w+%-%d+")
+  if not issue_id then
+    print("Issue ID could not be found in the branch name.")
+    return
+  end
+
+  -- Insert [ISSUE_ID] at the beginning of the first non-comment line
+  for i, line in ipairs(lines) do
+    if not line:match("^#") then
+      local new_line = "[" .. issue_id .. "] " .. line
+      vim.api.nvim_buf_set_lines(0, i - 1, i, false, {new_line})
+      break
+    end
+  end
+end
+
+-- Mapping <leader>i to the insert_issue_id function in .git/COMMIT_EDITMSG buffers
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "gitcommit",
+  callback = function()
+    vim.keymap.set('n', '<leader>i', insert_issue_id, {buffer = true})
+  end,
+})
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -249,6 +282,9 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
+
+-- LSP formatting on <leader>ff
+vim.keymap.set('n', '<leader>ff', function() vim.lsp.buf.format({async = true}) end, { silent = true, desc = 'Format with LSP' })
 
 require("lazy").setup("plugins", {
   install = { colorscheme = { "gruvbox", "habamax" } },
@@ -272,3 +308,35 @@ require("lazy").setup("plugins", {
     },
   },
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "ruby",
+    callback = function()
+        vim.bo.includeexpr = "v:lua.rails_container_to_file(v:fname)"
+    end,
+})
+
+function _G.rails_container_to_file(expr)
+    -- Debug output
+    vim.api.nvim_out_write("Original expression: " .. expr .. "\n")
+
+    -- Remove Container prefix and any potential trailing characters including the brackets
+    local container_path = expr:gsub('^Container%[["\']', ''):gsub('["\']%]$', '')
+
+    -- Debug output
+    vim.api.nvim_out_write("Container path: " .. container_path .. "\n")
+
+    -- Replace dots with directory separators
+    local file_path = container_path:gsub('%.', '/')
+
+    -- Append the .rb file extension
+    local result_path = 'app/services/' .. file_path .. '.rb'
+
+    -- Debug output
+    vim.api.nvim_out_write("Resulting file path: " .. result_path .. "\n")
+
+    return result_path
+end
+
+-- You can also add this line to ensure your 'path' includes the Rails directories
+vim.opt.path:append { "app/**", "lib/**", "config/**", "test/**", "spec/**" }

@@ -13,6 +13,9 @@ return {
     'nvim-tree/nvim-web-devicons', -- optional, for file icon
   },
   opts = {
+    filters = {
+      git_ignored = true,
+    },
     renderer = {
       indent_markers = {
         enable = false,
