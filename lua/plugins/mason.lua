@@ -126,22 +126,11 @@ return {
       keymap('n', '<leader>rn', vim.lsp.buf.rename, bufopts('Rename'))
       keymap('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts('Format'))
 
-      if is_saga_installed then
-        keymap("n", "gh", "<cmd>Lspsaga lsp_finder<CR>")
-        keymap("n", "gp", "<cmd>Lspsaga peek_definition<CR>")
+      keymap('n', 'gd', vim.lsp.buf.definition, bufopts('Go to definition'))
+      keymap({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, bufopts('Code action'))
+      keymap('n', 'K', vim.lsp.buf.hover, bufopts('Show hover'))
 
-        keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
-        keymap({"n","v"}, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
-        keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
-        keymap("n", "<leader>K", "<cmd>Lspsaga hover_doc ++keep<CR>")
-        keymap("n", "<leader>ol", "<cmd>Lspsaga outline<CR>")
-      else
-        keymap('n', 'gd', vim.lsp.buf.definition, bufopts('Go to definition'))
-        keymap({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, bufopts('Code action'))
-        keymap('n', 'K', vim.lsp.buf.hover, bufopts('Show hover'))
-      end
-
-      if client.name == "ruby_ls" then
+      if client.name == "ruby_lsp" then
         -- setup_diagnostics(client, bufnr)
         add_ruby_deps_command(client, bufnr)
       end
@@ -183,6 +172,17 @@ return {
           on_attach = on_attach,
           flags = lsp_flags,
         }
+
+        -- if (server_name == "ruby_lsp") then
+        --   require('lspconfig').ruby_lsp.setup({
+        --     -- capabilities = capabilities,
+        --     cmd = { 'ruby-lsp', '--branch', 'main' },
+        --     on_attach = function(client, bufnr)
+        --       on_attach(client, bufnr)
+        --       add_ruby_deps_command(client, bufnr)
+        --     end
+        --   })
+        -- end
       end,
     }
 

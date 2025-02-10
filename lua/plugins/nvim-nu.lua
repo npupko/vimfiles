@@ -1,3 +1,4 @@
 return {
-  'LhKipp/nvim-nu'
+  'LhKipp/nvim-nu',
+  enabled = true
 }

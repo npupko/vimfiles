@@ -1,6 +1,6 @@
 return {
   'lewis6991/gitsigns.nvim',
-  enabled = true,
+  enabled = false,
   opts = {
     signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
     numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
@@ -8,6 +8,9 @@ return {
     word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
     on_attach = function(bufnr)
       local gitsigns = require('gitsigns')
+
+      vim.cmd [[highlight! link SignColumn Normal]]
+      -- lsp diagnostics invert background color and foreground color
 
       local function map(mode, l, r, opts)
         opts = opts or {}

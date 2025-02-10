@@ -1,5 +1,5 @@
-  return {
-    "terrastruct/d2-vim",
-    enabled = true,
-    ft = "d2"
-  }
+return {
+  "terrastruct/d2-vim",
+  enabled = true,
+  ft = "d2"
+}

@@ -5,6 +5,7 @@
 -- vim.api.nvim_set_keymap('n', '<leader>tg', ':TestVisit<CR>', { noremap = true, silent = true })
 return {
   'janko-m/vim-test',
+  enabled = true,
   keys = {
     { '<leader>tn', ':TestNearest<CR>' },
     { '<leader>tf', ':TestFile<CR>' },

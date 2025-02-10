@@ -4,6 +4,10 @@ return {
   lazy = true,
   enabled = false,
   dependencies = {
+    "nvim-neotest/nvim-nio",
+    "nvim-lua/plenary.nvim",
+    "antoinemadec/FixCursorHold.nvim",
+    "nvim-treesitter/nvim-treesitter",
     "olimorris/neotest-rspec",
   },
   config = function()
@@ -14,7 +18,7 @@ return {
             return vim.tbl_flatten({
               "docker",
               "compose",
-              "run",
+              "exec",
               "-i",
               "-w", "/backend",
               "-e", "RAILS_ENV=test",
@@ -30,9 +34,10 @@ return {
             return string.sub(path, string.len(prefix) + 2, -1)
           end,
 
-          results_path = "tmp/rspec.output"
+          results_path = "tmp/rspec.output",
+          formatter = "json"
         })
-      },
+      }
     })
   end
 }
