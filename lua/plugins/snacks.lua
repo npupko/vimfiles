@@ -1,11 +1,15 @@
 return {
   "folke/snacks.nvim",
+  enabled = true,
   ---@type snacks.Config
   opts = {
+    bigfile = { enabled = true },
+    picker = { enabled = true },
     indent = {
-      -- your indent configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
+      enabled = true,
+      animate = {
+        enabled = false,
+      },
     }
   }
 }

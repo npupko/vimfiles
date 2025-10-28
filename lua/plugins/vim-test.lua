@@ -16,7 +16,8 @@ return {
   config = function()
     vim.g['test#strategy'] = "neovim"
     vim.g['test#runner_commands'] = {'RSpec'}
+    vim.g['test#javascript#runner'] = 'jest'
     -- vim.g['test#ruby#rspec#executable'] = 'bundle exec rspec'
-    vim.g['test#ruby#rspec#executable'] = 'docker-compose run --rm backend bundle exec rspec'
+    -- vim.g['test#ruby#rspec#executable'] = 'docker-compose run --rm backend bundle exec rspec'
   end,
 }

@@ -162,29 +162,29 @@ return {
     --   }
     -- end
 
-    require("mason-lspconfig").setup_handlers {
-      -- The first entry (without a key) will be the default handler
-      -- and will be called for each installed server that doesn't have
-      -- a dedicated handler.
-      function (server_name) -- default handler (optional)
-        -- print("Setting up handlers for " .. server_name)
-        require("lspconfig")[server_name].setup {
-          on_attach = on_attach,
-          flags = lsp_flags,
-        }
-
-        -- if (server_name == "ruby_lsp") then
-        --   require('lspconfig').ruby_lsp.setup({
-        --     -- capabilities = capabilities,
-        --     cmd = { 'ruby-lsp', '--branch', 'main' },
-        --     on_attach = function(client, bufnr)
-        --       on_attach(client, bufnr)
-        --       add_ruby_deps_command(client, bufnr)
-        --     end
-        --   })
-        -- end
-      end,
-    }
+    -- require("mason-lspconfig").setup {
+    --   -- The first entry (without a key) will be the default handler
+    --   -- and will be called for each installed server that doesn't have
+    --   -- a dedicated handler.
+    --   function (server_name) -- default handler (optional)
+    --     -- print("Setting up handlers for " .. server_name)
+    --     require("lspconfig")[server_name].setup {
+    --       on_attach = on_attach,
+    --       flags = lsp_flags,
+    --     }
+    --
+    --     -- if (server_name == "ruby_lsp") then
+    --     --   require('lspconfig').ruby_lsp.setup({
+    --     --     -- capabilities = capabilities,
+    --     --     cmd = { 'ruby-lsp', '--branch', 'main' },
+    --     --     on_attach = function(client, bufnr)
+    --     --       on_attach(client, bufnr)
+    --     --       add_ruby_deps_command(client, bufnr)
+    --     --     end
+    --     --   })
+    --     -- end
+    --   end,
+    -- }
 
     -- vim.diagnostic.config({
     --   virtual_text = false,
@@ -218,6 +218,32 @@ return {
       severity_sort = false,
     })
 
+    -- vim.lsp.config("*", {
+    --   on_attach = on_attach,
+    --   flags = lsp_flags,
+    -- })
+
+      local bufopts = function(desc)
+        return { noremap=true, silent=true, desc=desc }
+      end
+
+      keymap('n', 'gD', vim.lsp.buf.declaration, bufopts('Go to declaration'))
+      keymap('n', 'gi', vim.lsp.buf.implementation, bufopts('Go to implementation'))
+      keymap('n', 'gy', vim.lsp.buf.type_definition, bufopts('Go to type definition'))
+      keymap('n', 'gr', vim.lsp.buf.references, bufopts('Find references'))
+      -- keymap('n', '<leader>k', vim.lsp.buf.signature_help, bufopts('Show signature help'))
+      -- keymap('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts('Add workspace folder'))
+      -- keymap('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts('Remove workspace folder'))
+      -- keymap('n', '<leader>wl', function()
+      --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+      -- end, bufopts('List workspace folders'))
+      keymap('n', '<leader>rn', vim.lsp.buf.rename, bufopts('Rename'))
+      -- keymap('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts('Format'))
+      --
+      keymap('n', 'gd', vim.lsp.buf.definition, bufopts('Go to definition'))
+      keymap({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, bufopts('Code action'))
+      -- keymap('n', 'K', vim.lsp.buf.hover, bufopts('Show hover'))
+
     -- local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
     -- for type, icon in pairs(signs) do
     --   local hl = "DiagnosticsSign" .. type
@@ -225,7 +251,10 @@ return {
     -- end
 
     -- Attach lsp to cmp
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+    -- local cmp_is_installed, _cmp = pcall(require, 'cmp')
+    -- if cmp_is_installed then
+    --   local capabilities = vim.lsp.protocol.make_client_capabilities()
+    --   capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+    -- end
   end
 }

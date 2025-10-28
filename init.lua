@@ -86,11 +86,11 @@ vim.g.maplocalleader = ' '
 -- vim.api.nvim_create_user_command('Frt', M.prependFileWithMagicComment, { desc = 'Add magic comment line to file' })
 
 function M.copyCurrentFilenameFromProjectRootToClipboard()
-  local filename = fn.expand('%:p')
-  filename = fn.fnamemodify(filename, ':~:.')
-  local projectRoot = fn.system('git rev-parse --show-toplevel')
-  projectRoot = fn.fnamemodify(projectRoot, ':~:.')
-  filename = fn.substitute(filename, projectRoot, '', '')
+  local filename = vim.fn.expand('%:p')
+  filename = vim.fn.fnamemodify(filename, ':~:.')
+  local projectRoot = vim.fn.system('git rev-parse --show-toplevel'):gsub('\n', '')
+  projectRoot = vim.fn.fnamemodify(projectRoot, ':~:.')
+  filename = filename:gsub('^' .. vim.pesc(projectRoot), '')
   vim.fn.setreg('+', filename)
   print('Filename copied to clipboard: ' .. filename)
 end
@@ -340,3 +340,13 @@ end
 
 -- You can also add this line to ensure your 'path' includes the Rails directories
 vim.opt.path:append { "app/**", "lib/**", "config/**", "test/**", "spec/**" }
+
+local handle = io.popen("defaults read -g AppleInterfaceStyle")
+local theme = handle:read("*a")
+handle:close()
+
+-- if theme:match("Dark") then
+--   vim.opt.background = "dark"
+-- else
+--   vim.opt.background = "light"
+-- end
