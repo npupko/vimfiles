@@ -16,7 +16,6 @@ return {
     },
   },
   config = function()
-
     vim.diagnostic.config({
       underline = true,
       signs = true,
@@ -43,17 +42,6 @@ return {
       keymap("n", "<leader>e", vim.diagnostic.open_float, { desc = "Line diagnostics" })
     end
 
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    local ok_blink, blink = pcall(require, "blink.cmp")
-    if ok_blink and blink.get_lsp_capabilities then
-      capabilities = blink.get_lsp_capabilities(capabilities)
-    end
-
-    vim.lsp.config("*", {
-      capabilities = capabilities,
-      flags = { debounce_text_changes = 150 },
-    })
-
     local function add_ruby_deps_command(client, bufnr)
       vim.api.nvim_buf_create_user_command(bufnr, "ShowRubyDeps", function(lopts)
         local params = vim.lsp.util.make_text_document_params()
@@ -78,43 +66,48 @@ return {
           vim.fn.setqflist(qf_list, "r")
           vim.cmd.copen()
         end, bufnr)
-      end, { nargs = "?", complete = function()
-        return { "all" }
-      end })
+      end, {
+        nargs = "?",
+        complete = function()
+          return { "all" }
+        end,
+      })
     end
 
-    vim.api.nvim_create_autocmd("LspAttach", {
-      group = vim.api.nvim_create_augroup("lazy_lsp_attach", { clear = true }),
-      callback = function(event)
-        local client = vim.lsp.get_client_by_id(event.data.client_id)
-        local bufnr = event.buf
-        if not client then
-          return
-        end
+    local function on_attach(client, bufnr)
+      vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-        vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+      local function bufmap(mode, lhs, rhs, desc)
+        vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
+      end
 
-        local function bufmap(mode, lhs, rhs, desc)
-          vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
-        end
+      bufmap("n", "gd", vim.lsp.buf.definition, "Goto definition")
+      bufmap("n", "gD", vim.lsp.buf.declaration, "Goto declaration")
+      bufmap("n", "gi", vim.lsp.buf.implementation, "Goto implementation")
+      bufmap("n", "gy", vim.lsp.buf.type_definition, "Goto type definition")
+      bufmap("n", "gr", vim.lsp.buf.references, "Goto references")
+      bufmap("n", "K", vim.lsp.buf.hover, "Hover")
+      bufmap({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code actions")
+      bufmap("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
+      bufmap("n", "<leader>f", function()
+        vim.lsp.buf.format({ async = true })
+      end, "Format buffer")
 
-        bufmap("n", "gd", vim.lsp.buf.definition, "Goto definition")
-        bufmap("n", "gD", vim.lsp.buf.declaration, "Goto declaration")
-        bufmap("n", "gi", vim.lsp.buf.implementation, "Goto implementation")
-        bufmap("n", "gy", vim.lsp.buf.type_definition, "Goto type definition")
-        bufmap("n", "gr", vim.lsp.buf.references, "Goto references")
-        bufmap("n", "K", vim.lsp.buf.hover, "Hover")
-        bufmap({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code actions")
-        bufmap("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
-        bufmap("n", "<leader>f", function()
-          vim.lsp.buf.format({ async = true })
-        end, "Format buffer")
+      if client.name == "ruby_lsp" then
+        add_ruby_deps_command(client, bufnr)
+      end
+    end
 
-        if client.name == "ruby_lsp" then
-          add_ruby_deps_command(client, bufnr)
-        end
-      end,
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    local ok_blink, blink = pcall(require, "blink.cmp")
+    if ok_blink and blink.get_lsp_capabilities then
+      capabilities = blink.get_lsp_capabilities(capabilities)
+    end
+
+    vim.lsp.config("*", {
+      capabilities = capabilities,
+      flags = { debounce_text_changes = 150 },
+      on_attach = on_attach,
     })
-
   end,
 }

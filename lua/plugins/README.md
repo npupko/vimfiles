@@ -3,7 +3,7 @@
 This directory is organised for lazy.nvim and mirrors the main plugin domains.
 
 - `core/` – always-on editing defaults (commenting, repeat, snacks, etc.).
-- `lang/` – language-aware stack (Treesitter, LSP, language specific Vim plugins). The LSP entry point uses the Neovim 0.11+ `vim.lsp.config`/`vim.lsp.enable` APIs so you can drop per-server tweaks in one place without relying on the deprecated `require("lspconfig").setup()` calls.
+- `lang/` – language-aware stack (Treesitter, LSP, language specific Vim plugins). The LSP entry point (`lang/mason.lua`) relies on Neovim 0.11+ `vim.lsp.config()` defaults with `vim.lsp.enable()` handled by `mason-lspconfig`, so new servers should be customised there instead of calling `require("lspconfig").setup()`.
 - `tools/` – on-demand workflow helpers (Telescope, file explorers, Buddy, Fugitive, etc.).
 - `ui/` – colours and cosmetic layers that need to boot early.
 - `ai/` – AI assistants and completions (Tabby, Claude-Code, Amp, Copilot).
@@ -17,5 +17,6 @@ When adding new plugins try to:
 2. Keep expensive highlights or globals inside `config`/`init` blocks so they run only when the plugin loads.
 3. Co-locate language specific plugins in `lang/` so filetype gating stays obvious.
 4. For experiments, place specs in `extras/` so they can stay disabled without impacting boot time.
+5. For new LSP tweaks, extend `vim.lsp.config("<server>", { ... })` in `lang/mason.lua` or drop additional handlers inside the shared `on_attach` function.
 
 Use `:Lazy profile` after changes to confirm the startup budget – the current baseline is ~84 ms, with LazyDone landing around 77 ms on macOS (October 28, 2025).
