@@ -1,12 +1,12 @@
 return {
   "stevearc/oil.nvim",
-  cmd = { "Oil" },
+  lazy = false,
   keys = {
     { "-", function() require("oil").open() end, desc = "Open parent directory" },
   },
   opts = {
     keymaps = { q = "actions.close" },
-    default_file_explorer = false,
+    default_file_explorer = true,
     split = "botright",
   },
   dependencies = {

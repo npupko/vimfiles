@@ -1,5 +1,6 @@
 return {
   "TabbyML/vim-tabby",
+  enabled = false,
   event = "InsertEnter",
   dependencies = {
     "neovim/nvim-lspconfig",

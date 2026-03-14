@@ -3,8 +3,8 @@ local fn = vim.fn
 local api = vim.api
 local M = {}
 
--- vim.g.loaded_netrw = 1
--- vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 opt.foldenable = false
 opt.visualbell = true
@@ -67,8 +67,6 @@ vim.g.langmap = 'ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJ
 -- if fn.executable('volta') == 1 then
 --   vim.g.neovim_node_host = fn.trim(fn.system('volta which neovim-node-host'))
 -- end
-
-vim.g.host_ruby_prog = fn.trim(fn.system('which ruby'))
 
 vim.g.mapleader = ','
 vim.g.maplocalleader = ' '
@@ -300,6 +298,11 @@ require("lazy").setup("plugins", {
     rtp = {
       disabled_plugins = {
         "gzip",
+        "man",
+        "matchit",
+        "netrwPlugin",
+        "rplugin",
+        "spellfile",
         "tarPlugin",
         "tohtml",
         "tutor",
@@ -341,12 +344,3 @@ end
 -- You can also add this line to ensure your 'path' includes the Rails directories
 vim.opt.path:append { "app/**", "lib/**", "config/**", "test/**", "spec/**" }
 
-local handle = io.popen("defaults read -g AppleInterfaceStyle")
-local theme = handle:read("*a")
-handle:close()
-
--- if theme:match("Dark") then
---   vim.opt.background = "dark"
--- else
---   vim.opt.background = "light"
--- end
