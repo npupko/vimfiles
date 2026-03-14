@@ -11,7 +11,7 @@ return {
     { "<leader>m", "<cmd>NvimTreeFindFile<CR>", desc = "Reveal file" },
   },
   dependencies = {
-    "nvim-tree/nvim-web-devicons",
+    "echasnovski/mini.icons",
   },
   opts = {
     filters = {

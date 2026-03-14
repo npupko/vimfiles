@@ -4,5 +4,4 @@ return {
   { import = "plugins.tools" },
   { import = "plugins.ui" },
   { import = "plugins.ai" },
-  { import = "plugins.extras" },
 }

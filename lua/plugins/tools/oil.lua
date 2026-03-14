@@ -10,6 +10,6 @@ return {
     split = "botright",
   },
   dependencies = {
-    "nvim-tree/nvim-web-devicons",
+    "echasnovski/mini.icons",
   },
 }

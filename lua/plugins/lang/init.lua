@@ -1,6 +1,5 @@
 return {
   require("plugins.lang.blink-cmp"),
-  require("plugins.lang.d2-vim"),
   require("plugins.lang.mason"),
   require("plugins.lang.nvim-nu"),
   require("plugins.lang.nvim-treesitter"),
