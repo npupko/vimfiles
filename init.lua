@@ -269,7 +269,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -280,9 +280,6 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
-
--- LSP formatting on <leader>ff
-vim.keymap.set('n', '<leader>ff', function() vim.lsp.buf.format({async = true}) end, { silent = true, desc = 'Format with LSP' })
 
 require("lazy").setup("plugins", {
   install = { colorscheme = { "gruvbox", "habamax" } },

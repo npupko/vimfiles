@@ -1,10 +1,9 @@
+vim.lsp.enable({ "lua_ls", "ruby_lsp", "ts_ls", "jsonls", "html", "taplo", "svelte" })
+
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
-  build = ":MasonUpdate",
   dependencies = {
-    { "williamboman/mason.nvim", config = true },
-    { "williamboman/mason-lspconfig.nvim", opts = { automatic_enable = true } },
     { "folke/lazydev.nvim", ft = "lua", opts = {} },
   },
   config = function()
