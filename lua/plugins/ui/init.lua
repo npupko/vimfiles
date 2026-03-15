@@ -1,4 +1,4 @@
 return {
-  require("plugins.ui.gruvbox"),
+  require("plugins.ui.colorscheme"),
   require("plugins.ui.mini-icons"),
 }
