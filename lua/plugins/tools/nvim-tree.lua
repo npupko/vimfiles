@@ -14,6 +14,9 @@ return {
     "echasnovski/mini.icons",
   },
   opts = {
+    git = {
+      timeout = 5000,
+    },
     filters = {
       git_ignored = true,
     },
