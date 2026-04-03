@@ -271,10 +271,6 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Neovim 0.12 built-in opt-in packages
-vim.cmd.packadd("nvim.undotree")
-vim.cmd.packadd("nvim.difftool")
-
 require("lazy").setup("plugins", {
   install = { colorscheme = { "gruvbox", "catppuccin", "nord", "habamax" } },
   change_detection = {
@@ -300,6 +296,10 @@ require("lazy").setup("plugins", {
     },
   },
 })
+
+-- Neovim 0.12 built-in opt-in packages (must be after lazy.setup to preserve packpath)
+vim.cmd.packadd("nvim.undotree")
+vim.cmd.packadd("nvim.difftool")
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "ruby",
