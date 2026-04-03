@@ -1,5 +1,8 @@
+-- Disabled in favor of native vim.lsp.completion (Neovim 0.12)
+-- To re-enable: set enabled = true and remove vim.lsp.completion.enable() from lsp.lua
 return {
   "saghen/blink.cmp",
+  enabled = false,
   version = "*",
   event = "InsertEnter",
   dependencies = {

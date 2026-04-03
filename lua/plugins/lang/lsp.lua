@@ -19,19 +19,12 @@ return {
       severity_sort = true,
     })
 
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    local ok, blink = pcall(require, "blink.cmp")
-    if ok and blink.get_lsp_capabilities then
-      capabilities = blink.get_lsp_capabilities(capabilities)
-    end
-
-    vim.lsp.config("*", {
-      capabilities = capabilities,
-    })
-
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("user-lsp-keymaps", { clear = true }),
       callback = function(ev)
+        -- Native LSP completion (Neovim 0.12)
+        vim.lsp.completion.enable(true, ev.data.client_id, ev.buf, { autotrigger = true })
+
         local function map(mode, lhs, rhs, desc)
           vim.keymap.set(mode, lhs, rhs, { buffer = ev.buf, silent = true, desc = desc })
         end
