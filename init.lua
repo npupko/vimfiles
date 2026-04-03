@@ -3,9 +3,6 @@ local fn = vim.fn
 local api = vim.api
 local M = {}
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
 opt.foldenable = false
 opt.visualbell = true
 opt.relativenumber = true
@@ -14,7 +11,6 @@ opt.cursorline = false
 opt.cursorcolumn = false
 opt.number = true
 opt.confirm = true
-opt.hidden = true
 opt.clipboard:append({"unnamedplus"})
 opt.list = true
 opt.listchars = { tab = '  ', trail = '·', eol = '¬' }
@@ -34,10 +30,8 @@ opt.splitright = true
 
 opt.foldlevel = 20
 opt.foldmethod = 'expr'
-opt.foldexpr = 'nvim_treesitter#foldexpr()'
+opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
--- Fuzzy matching
-opt.wildmenu = true
 opt.wildignore:append({"**/node_modules/**", "**/.git/**", "**/build/**", "**/dist/**"})
 
 -- Backups
@@ -45,7 +39,6 @@ opt.swapfile = false
 opt.backup = false
 
 -- Indentation
-opt.autoindent = true
 opt.smartindent = false
 opt.smarttab = true
 opt.shiftwidth = 2
@@ -119,9 +112,6 @@ end
 vim.keymap.set('n', '<leader>q', M.CloseCurrentBuffer, { silent = true, desc = 'Close current buffer' })
 vim.keymap.set('n', '<leader>d', M.DeleteHiddenBuffers, { silent = true, desc = 'Delete hidden buffers' })
 
-vim.cmd("let $NVIM_TUI_ENABLE_TRUE_COLOR=1")
-
-opt.termguicolors = true
 opt.background = 'dark'
 
 -- local has_termguicolors = vim.fn.exists('+termguicolors')
@@ -296,12 +286,10 @@ require("lazy").setup("plugins", {
       disabled_plugins = {
         "gzip",
         "man",
-        "matchit",
         "netrwPlugin",
         "rplugin",
         "spellfile",
         "tarPlugin",
-        "tohtml",
         "tutor",
         "zipPlugin",
       },
