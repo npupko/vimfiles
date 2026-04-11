@@ -1,4 +1,4 @@
-vim.lsp.enable({ "lua_ls", "ruby_lsp", "ts_ls", "jsonls", "html", "taplo", "svelte" })
+vim.lsp.enable({ "lua_ls", "ruby_lsp", "ts_ls", "jsonls", "html", "taplo", "svelte", "gdscript" })
 
 return {
   "neovim/nvim-lspconfig",

@@ -49,32 +49,12 @@ opt.expandtab = true
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_perl_provider = 0
 
--- vim.cmd([[
--- set langmap='ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ, фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz'
--- ]])
+require('vim._core.ui2').enable()
+
 vim.g.langmap = 'ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ, фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz'
--- opt.keymap='russian-jcukenwin'
-
-
--- Nodejs host
--- if fn.executable('volta') == 1 then
---   vim.g.neovim_node_host = fn.trim(fn.system('volta which neovim-node-host'))
--- end
 
 vim.g.mapleader = ','
 vim.g.maplocalleader = ' '
-
--- function M.prependFileWithMagicComment()
---   local line = '# frozen_string_literal: true'
---   local currentLine = fn.getline(1)
---   if currentLine ~= line then
---     api.nvim_command("1s/^/" .. line .. "\r\r")
---     api.nvim_command("noh")
---   end
---
--- end
---
--- vim.api.nvim_create_user_command('Frt', M.prependFileWithMagicComment, { desc = 'Add magic comment line to file' })
 
 function M.copyCurrentFilenameFromProjectRootToClipboard()
   local filename = vim.fn.expand('%:p')
@@ -113,13 +93,6 @@ vim.keymap.set('n', '<leader>q', M.CloseCurrentBuffer, { silent = true, desc = '
 vim.keymap.set('n', '<leader>d', M.DeleteHiddenBuffers, { silent = true, desc = 'Delete hidden buffers' })
 
 opt.background = 'dark'
-
--- local has_termguicolors = vim.fn.exists('+termguicolors')
--- if has_termguicolors then
---   vim.o.t_8f = "\27[38;2;%lu;%lu;%lum"
---   vim.o.t_8b = "\27[48;2;%lu;%lu;%lum"
--- end
--- vim.cmd('colorscheme gruvbox')
 
 vim.keymap.set('n', '<leader>v', ':e $MYVIMRC<CR>', { desc = 'Edit vimrc' })
 vim.keymap.set('n', '<leader><c-v>', ':cd /Users/random/.config/nvim/lua/plugins<CR>', { desc = 'Edit plugins' })
@@ -167,34 +140,12 @@ vim.keymap.set('v', 'Q', ':norm @q<CR>', { silent = true, desc = 'Execute macro'
 
 vim.keymap.set('v', '<localleader>/', 'y/<C-R>"<CR>', { silent = true, desc = 'Search for selected text' })
 vim.keymap.set('n', '<localleader>/', ':nohlsearch<CR>', { silent = true, desc = 'Clear search' })
--- vim.keymap.set('i', '<C-c>', '<Esc><Esc>', { silent = true })
-vim.keymap.set('i', '<C-c>', '<NOP>', { silent = true, desc = 'Do nothing' })
 
 -- Expand filename for commands like Espec
 vim.keymap.set('c', '<c-e>', [[<C-R>=substitute(expand('%:r'), '^app[^/]*.', '', '')<CR>]], { desc = 'Expand filename' })
 
 -- Open quickfix error in quickfix window
 vim.keymap.set('n', '<localleader>q', [[:cg .git/quickfix.out<CR> :cwindow<CR>]], { desc = 'Open quickfix error in quickfix window' })
-
--- -- replaced with buddy.nvim plugin
--- function M.contains(list, x)
--- 	for _, v in pairs(list) do
--- 		if v == x then return true end
--- 	end
--- 	return false
--- end
--- function M.addDebuggerToNextLine()
---   local filetype = vim.bo.filetype
---   if filetype == 'lua' then
---     vim.api.nvim_command('normal obinding.pry')
---   elseif M.contains({'svelte', 'js', 'ts'}, filetype) then
---     vim.api.nvim_command('normal odebugger')
---   else
---     vim.api.nvim_command('normal obinding.pry')
---   end
--- end
---
--- vim.keymap.set('n', '<leader>/', M.addDebuggerToNextLine, { silent = true, desc = 'Add debugger to next line' })
 
 function M.copyStrAndOpen()
   -- local text = vim.fn.expand('<cword>')
@@ -208,15 +159,6 @@ vim.keymap.set('n', '<leader>op', M.copyStrAndOpen, { silent = true, desc = 'Cop
 
 vim.keymap.set('n', '<leader>A', '<CMD>argadd %<CR>', { silent = false, desc = 'Add current file to arglist' })
 
--- function M.copyLinterError()
---   local current_line = vim.api.nvim_win_get_cursor(0)[1] - 1
---   local result = vim.diagnostic.get(fn.bufnr('%'), { lnum = current_line })
---   vim.fn.setreg('+', result[1].code)
--- end
---
--- vim.keymap.set('n', '<leader>cle', M.copyLinterError, { silent = true, desc = 'Copy linter error' })
-
--- inoremap <C-c> <Esc>
 vim.keymap.set('i', '<C-c>', '<Esc>', { silent = true, desc = 'Exit insert mode' })
 
 -- Function to insert issue ID into commit message

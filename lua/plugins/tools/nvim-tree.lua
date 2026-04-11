@@ -1,11 +1,6 @@
 return {
   "nvim-tree/nvim-tree.lua",
-  cmd = {
-    "NvimTreeToggle",
-    "NvimTreeFocus",
-    "NvimTreeFindFile",
-    "NvimTreeCollapse",
-  },
+  lazy = false,
   keys = {
     { "<leader><leader>", "<cmd>NvimTreeToggle<CR>", desc = "Toggle tree" },
     { "<leader>m", "<cmd>NvimTreeFindFile<CR>", desc = "Reveal file" },
