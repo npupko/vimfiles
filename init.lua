@@ -14,7 +14,10 @@ opt.confirm = true
 opt.clipboard:append({"unnamedplus"})
 opt.list = true
 opt.listchars = { tab = '  ', trail = '·', eol = '¬' }
-opt.wrap = false
+opt.wrap = true
+opt.linebreak = true
+opt.breakindent = true
+opt.showbreak = '↪ '
 opt.path:remove "/usr/include"
 opt.path:append "**"
 opt.undofile = true
@@ -274,4 +277,3 @@ end
 
 -- You can also add this line to ensure your 'path' includes the Rails directories
 vim.opt.path:append { "app/**", "lib/**", "config/**", "test/**", "spec/**" }
-
