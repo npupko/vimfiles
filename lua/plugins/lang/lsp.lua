@@ -1,4 +1,23 @@
-vim.lsp.enable({ "lua_ls", "ruby_lsp", "ts_ls", "jsonls", "html", "taplo", "svelte", "gdscript" })
+-- Suppress harmless NO_RESULT_CALLBACK_FOUND noise from servers that reply to
+-- cancelled requests (ruby-lsp semanticTokens, taplo, etc.). See
+-- https://github.com/neovim/neovim/issues/11515 — Neovim's default _on_error
+-- writes the message to :messages before the user on_error callback can run,
+-- so we override the instance method per-client at on_init.
+local function suppress_orphan_response_errors(client)
+  local nrcb = vim.lsp.rpc.client_errors.NO_RESULT_CALLBACK_FOUND
+  local original = client._on_error
+  client._on_error = function(self, code, err)
+    if code == nrcb then
+      return
+    end
+    return original(self, code, err)
+  end
+end
+
+vim.lsp.config("ruby_lsp", { on_init = suppress_orphan_response_errors })
+vim.lsp.config("taplo", { on_init = suppress_orphan_response_errors })
+
+vim.lsp.enable({ "lua_ls", "ruby_lsp", "ts_ls", "jsonls", "html", "taplo", "svelte", "gdscript", "gopls", "marksman" })
 
 return {
   "neovim/nvim-lspconfig",
