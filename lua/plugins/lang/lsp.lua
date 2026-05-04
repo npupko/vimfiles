@@ -21,10 +21,9 @@ return {
     { "folke/lazydev.nvim", ft = "lua", opts = {} },
   },
   config = function()
-    vim.lsp.config("ruby_lsp", { on_init = suppress_orphan_response_errors })
     vim.lsp.config("taplo", { on_init = suppress_orphan_response_errors })
 
-    vim.lsp.enable({ "lua_ls", "ruby_lsp", "ts_ls", "jsonls", "html", "taplo", "svelte", "gdscript", "gopls", "marksman" })
+    vim.lsp.enable({ "lua_ls", "ts_ls", "jsonls", "html", "taplo", "svelte", "gopls", "marksman" })
 
     vim.diagnostic.config({
       underline = true,
@@ -58,39 +57,6 @@ return {
         end, "Format buffer")
         map("n", "<leader>e", vim.diagnostic.open_float, "Line diagnostics")
         map("n", "<leader>Q", vim.diagnostic.setloclist, "Quickfix diagnostics")
-
-        local client = vim.lsp.get_client_by_id(ev.data.client_id)
-        if client and client.name == "ruby_lsp" then
-          vim.api.nvim_buf_create_user_command(ev.buf, "ShowRubyDeps", function(opts)
-            local params = vim.lsp.util.make_text_document_params()
-            local show_all = opts.args == "all"
-
-            client.request("rubyLsp/workspace/dependencies", params, function(error, result)
-              if error then
-                vim.notify("ruby_lsp deps error: " .. error, vim.log.levels.ERROR)
-                return
-              end
-
-              local qf_list = {}
-              for _, item in ipairs(result or {}) do
-                if show_all or item.dependency then
-                  table.insert(qf_list, {
-                    text = string.format("%s (%s) - %s", item.name, item.version, item.dependency),
-                    filename = item.path,
-                  })
-                end
-              end
-
-              vim.fn.setqflist(qf_list, "r")
-              vim.cmd.copen()
-            end, ev.buf)
-          end, {
-            nargs = "?",
-            complete = function()
-              return { "all" }
-            end,
-          })
-        end
       end,
     })
   end,
