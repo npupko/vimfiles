@@ -14,11 +14,6 @@ local function suppress_orphan_response_errors(client)
   end
 end
 
-vim.lsp.config("ruby_lsp", { on_init = suppress_orphan_response_errors })
-vim.lsp.config("taplo", { on_init = suppress_orphan_response_errors })
-
-vim.lsp.enable({ "lua_ls", "ruby_lsp", "ts_ls", "jsonls", "html", "taplo", "svelte", "gdscript", "gopls", "marksman" })
-
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
@@ -26,6 +21,11 @@ return {
     { "folke/lazydev.nvim", ft = "lua", opts = {} },
   },
   config = function()
+    vim.lsp.config("ruby_lsp", { on_init = suppress_orphan_response_errors })
+    vim.lsp.config("taplo", { on_init = suppress_orphan_response_errors })
+
+    vim.lsp.enable({ "lua_ls", "ruby_lsp", "ts_ls", "jsonls", "html", "taplo", "svelte", "gdscript", "gopls", "marksman" })
+
     vim.diagnostic.config({
       underline = true,
       signs = true,
