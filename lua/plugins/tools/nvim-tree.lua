@@ -1,10 +1,10 @@
 return {
   "nvim-tree/nvim-tree.lua",
   lazy = false,
-  keys = {
-    { "<leader><leader>", "<cmd>NvimTreeToggle<CR>", desc = "Toggle tree" },
-    { "<leader>m", "<cmd>NvimTreeFindFile<CR>", desc = "Reveal file" },
-  },
+  init = function()
+    vim.keymap.set("n", "<leader><leader>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle tree" })
+    vim.keymap.set("n", "<leader>m", "<cmd>NvimTreeFindFile<CR>", { desc = "Reveal file" })
+  end,
   dependencies = {
     "echasnovski/mini.icons",
   },
