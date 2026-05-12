@@ -21,9 +21,17 @@ return {
     { "folke/lazydev.nvim", ft = "lua", opts = {} },
   },
   config = function()
+    -- Detect Tiltfile as filetype so tilt_ls attaches
+    vim.filetype.add({
+      filename = {
+        ["Tiltfile"] = "tiltfile",
+        ["Tiltfile.k8s"] = "tiltfile",
+      },
+    })
+
     vim.lsp.config("taplo", { on_init = suppress_orphan_response_errors })
 
-    vim.lsp.enable({ "lua_ls", "ts_ls", "jsonls", "html", "taplo", "svelte", "gopls", "marksman" })
+    vim.lsp.enable({ "lua_ls", "ts_ls", "jsonls", "html", "taplo", "svelte", "gopls", "marksman", "tilt_ls" })
 
     vim.diagnostic.config({
       underline = true,
