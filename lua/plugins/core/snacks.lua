@@ -13,7 +13,16 @@ return {
   },
   opts = {
     bigfile = { enabled = true },
-    picker = { enabled = true },
+    picker = {
+      enabled = true,
+      win = {
+        input = {
+          keys = {
+            ["<Esc>"] = { "close", mode = { "n", "i" } },
+          },
+        },
+      },
+    },
     indent = {
       enabled = true,
       animate = { enabled = false },
