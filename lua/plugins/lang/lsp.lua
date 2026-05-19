@@ -31,7 +31,7 @@ return {
 
     vim.lsp.config("taplo", { on_init = suppress_orphan_response_errors })
 
-    vim.lsp.enable({ "lua_ls", "ts_ls", "jsonls", "html", "taplo", "svelte", "gopls", "marksman", "tilt_ls" })
+    vim.lsp.enable({ "lua_ls", "ts_ls", "jsonls", "html", "taplo", "svelte", "gopls", "marksman", "tilt_ls", "basedpyright" })
 
     vim.diagnostic.config({
       underline = true,
