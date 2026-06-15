@@ -1,6 +1,7 @@
 return {
   "tpope/vim-fugitive",
-  cmd = { "Git", "G" },
+  cmd = { "Git", "G", "GBrowse" },
+  dependencies = { "tpope/vim-rhubarb" },
   keys = {
     { "<leader>fh", "<cmd>0Gclog<CR>", desc = "Git file history" },
     { "gh", "<cmd>diffget //2<CR>", desc = "Diff get ours" },

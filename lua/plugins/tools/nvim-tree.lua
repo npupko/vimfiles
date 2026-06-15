@@ -1,6 +1,7 @@
 return {
   "nvim-tree/nvim-tree.lua",
   lazy = false,
+  priority = 950, -- load early (after colorscheme 1000) so `,,` is ready ASAP
   init = function()
     vim.keymap.set("n", "<leader><leader>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle tree" })
     vim.keymap.set("n", "<leader>m", "<cmd>NvimTreeFindFile<CR>", { desc = "Reveal file" })
