@@ -7,6 +7,7 @@ opt.foldenable = false
 opt.visualbell = true
 opt.relativenumber = true
 opt.inccommand = 'nosplit'
+opt.completeopt = { 'menu', 'menuone', 'noselect' }
 opt.cursorline = false
 opt.cursorcolumn = false
 opt.number = true
