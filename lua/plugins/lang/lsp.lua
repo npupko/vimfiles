@@ -31,6 +31,23 @@ return {
 
     vim.lsp.config("taplo", { on_init = suppress_orphan_response_errors })
 
+    -- typescript-language-server needs a classic tsserver.js. The mise-global
+    -- `npm:typescript` primary is TS7 (native tsgo, no tsserver.js), and loose
+    -- .ts files (e.g. ~/.pi extensions) have no local node_modules to fall back
+    -- on, so the server would exit with "Could not find a valid TypeScript
+    -- installation". Point it at the mise-installed classic TS5 lib as a global
+    -- fallback (see programs.mise npm:typescript = [ "latest" "5" ] in home.nix).
+    vim.lsp.config("ts_ls", {
+      init_options = {
+        hostInfo = "neovim",
+        tsserver = {
+          -- vim.fs.normalize (not vim.fn.expand): expand/glob honor 'wildignore'
+          -- which filters node_modules, yielding an empty path.
+          path = vim.fs.normalize("~/.local/share/mise/installs/npm-typescript/5/node_modules/typescript/lib"),
+        },
+      },
+    })
+
     vim.lsp.enable({ "lua_ls", "ts_ls", "jsonls", "html", "taplo", "svelte", "gopls", "marksman", "tilt_ls", "basedpyright" })
 
     vim.diagnostic.config({
