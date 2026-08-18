@@ -31,24 +31,41 @@ return {
 
     vim.lsp.config("taplo", { on_init = suppress_orphan_response_errors })
 
-    -- typescript-language-server needs a classic tsserver.js. The mise-global
-    -- `npm:typescript` primary is TS7 (native tsgo, no tsserver.js), and loose
-    -- .ts files (e.g. ~/.pi extensions) have no local node_modules to fall back
-    -- on, so the server would exit with "Could not find a valid TypeScript
-    -- installation". Point it at the mise-installed classic TS5 lib as a global
-    -- fallback (see programs.mise npm:typescript = [ "latest" "5" ] in home.nix).
-    vim.lsp.config("ts_ls", {
-      init_options = {
-        hostInfo = "neovim",
-        tsserver = {
-          -- vim.fs.normalize (not vim.fn.expand): expand/glob honor 'wildignore'
-          -- which filters node_modules, yielding an empty path.
-          path = vim.fs.normalize("~/.local/share/mise/installs/npm-typescript/5/node_modules/typescript/lib"),
-        },
-      },
+    -- tsgo (TypeScript-Go) is the TS/JS server, taken from @effect/tsgo: a tsgo
+    -- build carrying the Effect language service, so Effect diagnostics ride
+    -- along on the normal TS server instead of needing a second client. Effect
+    -- rules only fire where a tsconfig declares the "@effect/language-service"
+    -- plugin, so it behaves as plain tsgo everywhere else.
+    --
+    -- Always the mise-global build: it bundles its own lib.*.d.ts, so loose .ts
+    -- files with no node_modules get a server too — which is what retired the
+    -- ts_ls + classic-TS5 fallback this replaced.
+    --
+    -- Configured under nvim-lspconfig's "tsc" name: lspconfig folded its old
+    -- "tsgo" config into "tsc" and kept "tsgo" only as a deprecated alias that
+    -- warns on init (removed in nvim-lspconfig 3.0.0).
+    vim.lsp.config("tsc", {
+      cmd = function(dispatchers)
+        -- nosuf=true, and vim.fs.normalize rather than expand: both glob and
+        -- expand otherwise honor 'wildignore', which filters out node_modules.
+        local builds = vim.fn.glob(
+          vim.fs.normalize(
+            "~/.local/share/mise/installs/npm-effect-tsgo/latest/node_modules/@effect/tsgo-*/artifacts/typescript/*/tsc"
+          ),
+          true,
+          true
+        )
+        -- artifacts/ also ships a `next` prerelease (7.1.0-dev.*); take the
+        -- newest plain x.y.z instead.
+        builds = vim.tbl_filter(function(p)
+          return p:match("/%d+%.%d+%.%d+/tsc$") ~= nil
+        end, builds)
+        table.sort(builds)
+        return vim.lsp.rpc.start({ builds[#builds] or "tsgo", "--lsp", "--stdio" }, dispatchers)
+      end,
     })
 
-    vim.lsp.enable({ "lua_ls", "ts_ls", "jsonls", "html", "taplo", "svelte", "gopls", "marksman", "tilt_ls", "basedpyright" })
+    vim.lsp.enable({ "lua_ls", "tsc", "jsonls", "html", "taplo", "svelte", "gopls", "marksman", "tilt_ls", "basedpyright", "terraformls" })
 
     vim.diagnostic.config({
       underline = true,
