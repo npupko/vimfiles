@@ -42,7 +42,11 @@ return {
     -- does nothing. They come back per-project — `npm i -D typescript` plus
     -- `npx @effect/tsgo patch`, which swaps effect-tsgo (tsgo + the Effect LS
     -- compiled in) into node_modules, exactly the binary root_dir prefers.
-    vim.lsp.enable({ "lua_ls", "tsc", "jsonls", "html", "taplo", "svelte", "gopls", "marksman", "tilt_ls", "basedpyright", "terraformls" })
+    -- svelte (svelteserver) is deliberately absent: its only npm release depends
+    -- on svelte ^4.2.19, and svelte 4.2.20 is a backport published after 5.0.0
+    -- without the provenance 5.0.0 carried, which mise's install trust policy
+    -- rejects. Re-add once svelte-language-server moves to svelte 5.
+    vim.lsp.enable({ "lua_ls", "tsc", "jsonls", "html", "taplo", "gopls", "marksman", "tilt_ls", "basedpyright", "terraformls" })
 
     vim.diagnostic.config({
       underline = true,
