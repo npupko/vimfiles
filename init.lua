@@ -218,7 +218,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins", {
-  install = { colorscheme = { "gruvbox", "catppuccin", "nord", "habamax" } },
+  install = { colorscheme = { "habamax" } },
   change_detection = {
     enabled = true,
     notify = false,
