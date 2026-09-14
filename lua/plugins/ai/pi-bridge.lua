@@ -1,7 +1,7 @@
 return {
   dir = "~/.pi/agent/extensions/nvim-bridge",
   name = "pi",
-  enabled = true,
+  enabled = false,
   event = "VeryLazy",
   config = function()
     require("pi").setup()

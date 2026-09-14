@@ -204,6 +204,12 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Opt-in exit-hang diagnostic (NVIM_EXIT_TRACE=1); must precede lazy.setup so
+-- its VimLeavePre handler is registered before any plugin's.
+if vim.env.NVIM_EXIT_TRACE then
+  require("exit_trace").setup()
+end
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
